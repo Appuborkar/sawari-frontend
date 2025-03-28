@@ -33,7 +33,7 @@ const SignInForm = () => {
     if (validate()) {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/auth/login",
+          `${API_BASE_URL}/api/auth/login`,
           {
             email: formData.email, // Trim spaces
             password: formData.password
@@ -63,7 +63,7 @@ const SignInForm = () => {
   };
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/google-signin", {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/google-signin`, {
         token: credentialResponse.credential,
       });
       if (response.data.success) {

@@ -9,7 +9,7 @@ const ViewTickets = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/booking/viewticket`, {
+        const response = await axios.get(`${API_BASE_URL}/api/booking/viewticket`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
           withCredentials: true,
         });
@@ -25,7 +25,7 @@ const ViewTickets = () => {
         await Promise.all(
           uniqueBusIds.map(async (busId) => {
             try {
-              const busRes = await axios.get(`http://localhost:5000/api/bus/details/${busId}`);
+              const busRes = await axios.get(`${API_BASE_URL}/api/bus/details/${busId}`);
               busData[busId] = busRes.data;
             } catch (error) {
               console.error("Error fetching bus details:", error);

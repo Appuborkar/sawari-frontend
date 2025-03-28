@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
+const API_BASE_URL = process.env.REACT_APP_URL; 
 const PassengerForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const PassengerForm = () => {
     );
 
     if (busId) {
-      axios.get(`http://localhost:5000/api/bus/${busId}/price`)
+      axios.get(`${API_BASE_URL}/api/bus/${busId}/price`)
         .then((res) => {
           console.log("Fare Response:", res.data);
           setFareAmount(res.data.price);
@@ -109,7 +109,7 @@ const PassengerForm = () => {
   const confirmBooking = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/booking/${busId}/confirm`,
+        `${API_BASE_URL}/api/booking/${busId}/confirm`,
         { busId, seat: selectedSeats, passengers: passengerDetails },
         { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } }
       );

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
+const API_BASE_URL = process.env.REACT_APP_URL; 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -14,7 +15,7 @@ const Navbar = () => {
 
     if (token) {
       axios
-        .get("http://localhost:5000/api/auth/user", {
+        .get(`${API_BASE_URL}/api/auth/user`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {

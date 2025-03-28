@@ -18,7 +18,7 @@ const SearchBox = () => {
 
  
   useEffect(() => {
-    axios.get("http://localhost:5000/api/place")
+    axios.get(`${API_BASE_URL}/api/place`)
       .then(response => {
         const formattedPlaces = response.data.map(place => ({
           value: place.name, label: place.name

@@ -14,12 +14,12 @@ const Ticket = () => {
       console.log("Request Body:", bookingId);
       
       // Fetch ticket details
-      axios.get(`http://localhost:5000/api/booking/ticket/${bookingId}`)
+      axios.get(`${API_BASE_URL}/api/booking/ticket/${bookingId}`)
         .then((res) => {
           setTicket(res.data);
 
           // Fetch bus details
-          axios.get(`http://localhost:5000/api/bus/details/${res.data.busId}`)
+          axios.get(`${API_BASE_URL}/api/bus/details/${res.data.busId}`)
             .then((response) => setBusDetails(response.data))
             .catch((error) => console.error("Error fetching bus details:", error));
 

@@ -22,7 +22,7 @@ const Seatmapping = () => {
     if (!busId) return;
 
     axios
-      .get(`http://localhost:5000/api/bus/${busId}/seats`)
+      .get(`${API_BASE_URL}/api/bus/${busId}/seats`)
       .then((res) => {
         console.log("Seats Response:", res.data);
         const updatedSeats = Array(totalSeats).fill("available");
@@ -55,7 +55,7 @@ const Seatmapping = () => {
         newSelectedSeats.push(seatNumber + 1);
         try {
           console.log("Sending Temp-Hold Request:", { seatNumber: seatNumber + 1 });
-          await axios.post(`http://localhost:5000/api/bus/${busId}/temp-hold`, { seatNumber: seatNumber + 1 });
+          await axios.post(`${API_BASE_URL}/api/bus/${busId}/temp-hold`, { seatNumber: seatNumber + 1 });
 
           setSeats((prevSeats) => {
             const updatedSeats = [...prevSeats];
@@ -93,7 +93,7 @@ const Seatmapping = () => {
       if (tempSeats.length > 0) {
         console.log("Releasing Temporary Seats:", tempSeats);
         axios
-          .post(`http://localhost:5000/api/booking/${busId}/release`, { seats: tempSeats })
+          .post(`${API_BASE_URL}/api/booking/${busId}/release`, { seats: tempSeats })
           .then(() => {
             setSeats((prevSeats) => {
               const updatedSeats = [...prevSeats];

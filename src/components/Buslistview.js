@@ -9,6 +9,7 @@
     const departureDate = queryParams.get("departureDate");
     const [buses, setBuses] = useState([]);
     const [user, setUser] = useState(null);
+    const API_BASE_URL = process.env.REACT_APP_URL; 
     useEffect(() => {
       const authToken = localStorage.getItem("authToken");
       if (authToken) {
@@ -16,7 +17,7 @@
       }
       if (source && destination && departureDate) {
         axios
-          .get(`http://localhost:5000/api/bus/search?source=${source}&destination=${destination}&departureDate=${departureDate}`)
+          .get(`${API_BASE_URL}/api/bus/search?source=${source}&destination=${destination}&departureDate=${departureDate}`)
           .then(response => {
             setBuses(response.data);
           })

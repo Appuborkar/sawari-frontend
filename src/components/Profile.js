@@ -9,7 +9,7 @@ const MyProfile = () => {
   const [previewPhoto, setPreviewPhoto] = useState(null); // New state for preview image
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/auth/profile", { 
+    axios.get(`${API_BASE_URL}/api/auth/profile`, { 
       headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       withCredentials: true 
     })
@@ -56,7 +56,7 @@ const MyProfile = () => {
     }
   
     try {
-      const response = await axios.put("http://localhost:5000/api/auth/update-profile", formDataToSend, {
+      const response = await axios.put(`${API_BASE_URL}/api/auth/update-profile`, formDataToSend, {
         headers: { 
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("authToken")}`
