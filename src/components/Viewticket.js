@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaBusAlt, FaClock, FaMapMarkerAlt, FaRupeeSign, FaTicketAlt, FaUser } from "react-icons/fa";
-
+const API_BASE_URL = process.env.REACT_APP_URL; 
 const ViewTickets = () => {
   const [tickets, setTickets] = useState([]); // Store multiple tickets
   const [busDetails, setBusDetails] = useState({}); // Store bus details for each ticket

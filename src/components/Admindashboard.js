@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaBus, FaPlus, FaTicketAlt, FaTrash } from "react-icons/fa";
 
-
+const API_BASE_URL = process.env.REACT_APP_URL; 
 const AdminDashboard = () => {
   const [buses, setBuses] = useState([]);
   const [bookings, setBookings] = useState([]);
@@ -28,7 +28,7 @@ const AdminDashboard = () => {
 
   const fetchBuses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/bus/buses");
+      const res = await axios.get(`${API_BASE_URL}api/bus/buses`);
       setBuses(res.data);
     } catch (error) {
       console.error("Error fetching buses:", error);
@@ -37,7 +37,7 @@ const AdminDashboard = () => {
 
   const fetchBookings = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/booking/bookings");
+      const res = await axios.get(`${API_BASE_URL}api/booking/bookings`);
       setBookings(res.data);
 
       // Extract unique bus IDs and fetch details
@@ -48,7 +48,7 @@ const AdminDashboard = () => {
         uniqueBusIds.map(async (busId) => {
           if (busId) {
             try {
-              const busRes = await axios.get(`http://localhost:5000/api/bus/details/${busId}`);
+              const busRes = await axios.get(`${API_BASE_URL}api/bus/details/${busId}`);
               busData[busId] = busRes.data;
             } catch (error) {
               console.error("Error fetching bus details:", error);
@@ -65,7 +65,7 @@ const AdminDashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this bus?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/bus/delete/${id}`);
+        await axios.delete(`${API_BASE_URL}/api/bus/delete/${id}`);
         fetchBuses();
       } catch (error) {
         console.error("Error deleting bus:", error);
@@ -80,7 +80,7 @@ const AdminDashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/bus/newbus", form);
+      await axios.post(`${API_BASE_URL}api/bus/newbus`, form);
       fetchBuses();
       setForm({
         source: "",

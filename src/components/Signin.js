@@ -2,6 +2,7 @@ import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+const API_BASE_URL = process.env.REACT_APP_URL; 
 const SignInForm = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});

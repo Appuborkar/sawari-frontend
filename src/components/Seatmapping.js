@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaChair } from "react-icons/fa";
 import { GiSteeringWheel } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
-
+const API_BASE_URL = process.env.REACT_APP_URL; 
 const Seatmapping = () => {
   
   const location = useLocation();
