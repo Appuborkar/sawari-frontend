@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaBusAlt, FaClock, FaMapMarkerAlt, FaRupeeSign, FaTicketAlt, FaUser } from "react-icons/fa";
-const API_BASE_URL = process.env.REACT_APP_URL; 
 const ViewTickets = () => {
+  const API_BASE_URL = process.env.REACT_APP_URL; 
   const [tickets, setTickets] = useState([]); // Store multiple tickets
   const [busDetails, setBusDetails] = useState({}); // Store bus details for each ticket
 
   useEffect(() => {
+
     const fetchTickets = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/booking/viewticket`, {

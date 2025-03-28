@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-const API_BASE_URL = process.env.REACT_APP_URL; 
+
 const PassengerForm = () => {
+  const API_BASE_URL = process.env.REACT_APP_URL; 
   const location = useLocation();
   const navigate = useNavigate();
   const busId = new URLSearchParams(location.search).get("busId");

@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaBus, FaPlus, FaTicketAlt, FaTrash } from "react-icons/fa";
 
-const API_BASE_URL = process.env.REACT_APP_URL; 
+
 const AdminDashboard = () => {
+  const API_BASE_URL = process.env.REACT_APP_URL; 
   const [buses, setBuses] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [busDetails, setBusDetails] = useState({});

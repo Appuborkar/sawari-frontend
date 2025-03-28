@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-const API_BASE_URL = process.env.REACT_APP_URL; 
+
 const SignupForm = () => {
+  const API_BASE_URL = process.env.REACT_APP_URL; 
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({

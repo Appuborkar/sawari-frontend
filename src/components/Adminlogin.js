@@ -3,9 +3,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 // import "./AdminLogin.css";
 
-const API_BASE_URL = process.env.REACT_APP_URL; 
+
 
 const AdminLogin = () => {
+  const API_BASE_URL = process.env.REACT_APP_URL; 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

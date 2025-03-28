@@ -2,6 +2,7 @@
   import React, { useEffect, useState } from "react";
   import { Link, useLocation } from "react-router-dom";
   const BusListView = () => {
+    const API_BASE_URL = process.env.REACT_APP_URL; 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const source = queryParams.get("source");
@@ -9,7 +10,6 @@
     const departureDate = queryParams.get("departureDate");
     const [buses, setBuses] = useState([]);
     const [user, setUser] = useState(null);
-    const API_BASE_URL = process.env.REACT_APP_URL; 
     useEffect(() => {
       const authToken = localStorage.getItem("authToken");
       if (authToken) {

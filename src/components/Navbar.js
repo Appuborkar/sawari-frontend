@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
-const API_BASE_URL = process.env.REACT_APP_URL; 
+ 
 const Navbar = () => {
+  const API_BASE_URL = process.env.REACT_APP_URL;
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
