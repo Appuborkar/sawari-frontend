@@ -24,7 +24,7 @@ const Footer = () => {
           </div>
         </div>
 
-       
+      
 
         {/* Copyright */}
         <div className="copyright">

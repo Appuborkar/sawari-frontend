@@ -1,10 +1,8 @@
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const SignInForm = () => {
-  const API_BASE_URL = process.env.REACT_APP_URL; 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -35,7 +33,7 @@ const SignInForm = () => {
     if (validate()) {
       try {
         const response = await axios.post(
-          `${API_BASE_URL}/api/auth/login`,
+          "http://localhost:5000/api/auth/login",
           {
             email: formData.email, // Trim spaces
             password: formData.password
@@ -65,7 +63,7 @@ const SignInForm = () => {
   };
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/auth/google-signin`, {
+      const response = await axios.post("http://localhost:5000/api/auth/google-signin", {
         token: credentialResponse.credential,
       });
       if (response.data.success) {
@@ -115,10 +113,10 @@ const SignInForm = () => {
               {loading ? "Signing In..." : "Sign In"}
             </button>
 
-            <div className="links">
+            {/* <div className="links">
               <Link to="/forgot-password">Forgot Password?</Link>
               <Link to="/signup">Not Registered? Click Here</Link>
-            </div>
+            </div> */}
 
             <GoogleLogin onSuccess={handleGoogleSuccess} onError={() => setMessage("Google Sign-In Failed")} />
           </form>

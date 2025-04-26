@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { FaChair } from "react-icons/fa";
 import { GiSteeringWheel } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
- 
+
 const Seatmapping = () => {
-  const API_BASE_URL = process.env.REACT_APP_URL;
+  
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const busId = queryParams.get("busId");
@@ -22,7 +22,7 @@ const Seatmapping = () => {
     if (!busId) return;
 
     axios
-      .get(`${API_BASE_URL}/api/bus/${busId}/seats`)
+      .get(`http://localhost:5000/api/bus/${busId}/seats`)
       .then((res) => {
         console.log("Seats Response:", res.data);
         const updatedSeats = Array(totalSeats).fill("available");
@@ -55,7 +55,7 @@ const Seatmapping = () => {
         newSelectedSeats.push(seatNumber + 1);
         try {
           console.log("Sending Temp-Hold Request:", { seatNumber: seatNumber + 1 });
-          await axios.post(`${API_BASE_URL}/api/bus/${busId}/temp-hold`, { seatNumber: seatNumber + 1 });
+          await axios.post(`http://localhost:5000/api/bus/${busId}/temp-hold`, { seatNumber: seatNumber + 1 });
 
           setSeats((prevSeats) => {
             const updatedSeats = [...prevSeats];
@@ -93,7 +93,7 @@ const Seatmapping = () => {
       if (tempSeats.length > 0) {
         console.log("Releasing Temporary Seats:", tempSeats);
         axios
-          .post(`${API_BASE_URL}/api/booking/${busId}/release`, { seats: tempSeats })
+          .post(`http://localhost:5000/api/booking/${busId}/release`, { seats: tempSeats })
           .then(() => {
             setSeats((prevSeats) => {
               const updatedSeats = [...prevSeats];

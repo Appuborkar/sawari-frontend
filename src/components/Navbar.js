@@ -1,53 +1,51 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
- 
 const Navbar = () => {
-  const API_BASE_URL = process.env.REACT_APP_URL;
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // ✅ Fetch User Profile from Backend
+  const isAdminContext =
+    location.pathname.startsWith("/adminLogin") ||
+    location.pathname.startsWith("/dashboard");
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-
     if (token) {
       axios
-        .get(`${API_BASE_URL}/api/auth/user`, {
+        .get("http://localhost:5000/api/auth/user", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
-          setUser(res.data.user); // Store user data
+          setUser(res.data.user);
         })
         .catch((err) => {
           console.error("Error fetching user profile:", err);
-          localStorage.removeItem("authToken"); // Remove invalid token
+          localStorage.removeItem("authToken");
           setUser(null);
         });
     }
   }, []);
 
-  // ✅ Logout Function
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Remove token
-    setUser(null); // Reset user state
-    navigate("/"); // Redirect to homepage
+    localStorage.removeItem("authToken");
+    setUser(null);
+    navigate("/");
   };
 
   return (
     <nav className="navbar">
-      {/* Logo & Sawari Name */}
       <div className="logo">
         <Link to="/">
           <img src={"/Assets/Logo.jpeg"} alt="Logo" className="logo-img" />
         </Link>
-        <span className="sawari">Sawari</span> {/* Stylish Sawari Name */}
+        <span className="sawari">Sawari</span>
       </div>
 
-      {/* Navigation Links */}
       <div className={`nav-links ${menuOpen ? "open" : ""}`}>
         <Link to="/" className="nav-item" onClick={() => setMenuOpen(false)}>
           Home
@@ -56,30 +54,26 @@ const Navbar = () => {
           About Us
         </Link>
 
-        {/*If User Logged In, Show Profile, My Profile & Logout */}
-        {user ? (
-          <div className="user-profile">
-           
-            {/* My Profile Link */}
-            <Link to="/profile" className="my-profile" onClick={() => setMenuOpen(false)}>
-              MyProfile
-            </Link>
-
-            {/* Logout Button */}
-            <div className="logout-btn" onClick={handleLogout}>
-              Logout
+        {!isAdminContext && (
+          user ? (
+            <div className="user-profile">
+              <Link to="/profile" className="my-profile" onClick={() => setMenuOpen(false)}>
+                MyProfile
+              </Link>
+              <div className="logout-btn" onClick={handleLogout}>
+                Logout
+              </div>
             </div>
-          </div>
-        ) : (
-          // ✅ If No User Logged In, Show Sign In / Sign Up
-          <div className="auth-links">
-            <Link to="/Signin" className="nav-item" onClick={() => setMenuOpen(false)}>
-              Sign In
-            </Link>
-            <Link to="/Signup" className="nav-item signup-btn" onClick={() => setMenuOpen(false)}>
-              Sign Up
-            </Link>
-          </div>
+          ) : (
+            <div className="auth-links">
+              <Link to="/Signin" className="nav-item" onClick={() => setMenuOpen(false)}>
+                Sign In
+              </Link>
+              <Link to="/Signup" className="nav-item signup-btn" onClick={() => setMenuOpen(false)}>
+                Sign Up
+              </Link>
+            </div>
+          )
         )}
       </div>
 

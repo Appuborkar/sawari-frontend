@@ -1,12 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { FaBus, FaPlus, FaTicketAlt, FaTrash } from "react-icons/fa";
-
+import { FaBus, FaPlus, FaSignOutAlt, FaTicketAlt, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
-  const API_BASE_URL = process.env.REACT_APP_URL; 
   const [buses, setBuses] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [busDetails, setBusDetails] = useState({});
@@ -23,13 +21,15 @@ const AdminDashboard = () => {
     seats: 40,
   });
 
+  const navigate = useNavigate(); 
+
   useEffect(() => {
     fetchBuses();
   }, []);
 
   const fetchBuses = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}api/bus/buses`);
+      const res = await axios.get("http://localhost:5000/api/bus/buses");
       setBuses(res.data);
     } catch (error) {
       console.error("Error fetching buses:", error);
@@ -38,10 +38,9 @@ const AdminDashboard = () => {
 
   const fetchBookings = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}api/booking/bookings`);
+      const res = await axios.get("http://localhost:5000/api/booking/bookings");
       setBookings(res.data);
 
-      // Extract unique bus IDs and fetch details
       const uniqueBusIds = [...new Set(res.data.map((booking) => booking.busId?._id))];
       const busData = {};
 
@@ -49,7 +48,7 @@ const AdminDashboard = () => {
         uniqueBusIds.map(async (busId) => {
           if (busId) {
             try {
-              const busRes = await axios.get(`${API_BASE_URL}api/bus/details/${busId}`);
+              const busRes = await axios.get(`http://localhost:5000/api/bus/details/${busId}`);
               busData[busId] = busRes.data;
             } catch (error) {
               console.error("Error fetching bus details:", error);
@@ -66,7 +65,7 @@ const AdminDashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this bus?")) {
       try {
-        await axios.delete(`${API_BASE_URL}/api/bus/delete/${id}`);
+        await axios.delete(`http://localhost:5000/api/bus/delete/${id}`);
         fetchBuses();
       } catch (error) {
         console.error("Error deleting bus:", error);
@@ -81,7 +80,7 @@ const AdminDashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_BASE_URL}api/bus/newbus`, form);
+      await axios.post("http://localhost:5000/api/bus/newbus", form);
       fetchBuses();
       setForm({
         source: "",
@@ -99,15 +98,21 @@ const AdminDashboard = () => {
     }
   };
 
+  // Admin Logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/adminLogin");
+  };
+
   return (
     <div className="admin-container">
       <aside className="sidebar">
         <button onClick={() => setView("buses")}><FaBus /> Manage Buses</button>
         <button onClick={() => { setView("bookings"); fetchBookings(); }}><FaTicketAlt /> View Bookings</button>
+        <button onClick={handleLogout}><FaSignOutAlt /> Logout</button>
       </aside>
 
       <main className="content">
-        {/* Buses Management View */}
         {view === "buses" && (
           <div className="bus-management">
             <h2 style={{ textAlign: "center" }}>Welcome to Admin Page</h2>
@@ -152,33 +157,24 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {/* Booking Details View */}
         {view === "bookings" && (
           <div className="view-bookings">
             <h2>All Bookings</h2>
             {bookings.map((booking) => (
               <div key={booking._id} className="booking-card">
                 <h3>Ticket No: {booking.ticketNumber}</h3>
-
-                {/* Bus Details */}
                 {busDetails[booking.busId?._id] ? (
                   <p>Source: {busDetails[booking.busId._id].source} → Destination: {busDetails[booking.busId._id].destination}</p>
                 ) : (
                   <p>Loading bus details...</p>
                 )}
-
-                {/* User Details */}
                 <p><h4>Booked by: {booking.userId?.name || "Unknown"}</h4></p>
-
-                {/* Passenger Details */}
                 <div>
                   <h4>Passengers Details:</h4>
                   {booking.passengers.map((passenger, index) => (
                     <p key={index}>Name: {passenger.name}, Age: {passenger.age} yrs, Gender: {passenger.gender}, Mobile No: {passenger.mobile}</p>
                   ))}
                 </div>
-
-                {/* Additional Details */}
                 <p>Seat Number: {booking.seats.join(", ")}</p>
                 <p>Total Fare: ₹{booking.totalFare}</p>
                 <p className={`font-semibold ${booking.status === "confirmed" ? "text-green-500" : "text-red-500"}`}>

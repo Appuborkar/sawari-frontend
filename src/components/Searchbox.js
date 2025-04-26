@@ -6,8 +6,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; //css for calender
 import { FaCalendarAlt, FaExchangeAlt, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import Select from "react-select";
+
 const SearchBox = () => {
-  const API_BASE_URL = process.env.REACT_APP_URL; 
   const navigate = useNavigate(); // ✅ Hook for navigation
 
   // const { fetchBuses } = useContext(BusContext); // ✅ Use fetchBuses from context
@@ -18,7 +18,7 @@ const SearchBox = () => {
 
  
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/api/place`)
+    axios.get("http://localhost:5000/api/place")
       .then(response => {
         const formattedPlaces = response.data.map(place => ({
           value: place.name, label: place.name

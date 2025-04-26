@@ -5,7 +5,6 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
-  const API_BASE_URL = process.env.REACT_APP_URL; 
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -74,7 +73,7 @@ const SignupForm = () => {
 
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/auth/signup`, formDataToSend, {
+      const response = await axios.post("http://localhost:5000/api/auth/signup", formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

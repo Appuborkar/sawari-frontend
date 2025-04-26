@@ -1,16 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaBusAlt, FaClock, FaMapMarkerAlt, FaRupeeSign, FaTicketAlt, FaUser } from "react-icons/fa";
+
 const ViewTickets = () => {
-  const API_BASE_URL = process.env.REACT_APP_URL; 
   const [tickets, setTickets] = useState([]); // Store multiple tickets
   const [busDetails, setBusDetails] = useState({}); // Store bus details for each ticket
 
   useEffect(() => {
-
     const fetchTickets = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/booking/viewticket`, {
+        const response = await axios.get(`http://localhost:5000/api/booking/viewticket`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
           withCredentials: true,
         });
@@ -26,7 +25,7 @@ const ViewTickets = () => {
         await Promise.all(
           uniqueBusIds.map(async (busId) => {
             try {
-              const busRes = await axios.get(`${API_BASE_URL}/api/bus/details/${busId}`);
+              const busRes = await axios.get(`http://localhost:5000/api/bus/details/${busId}`);
               busData[busId] = busRes.data;
             } catch (error) {
               console.error("Error fetching bus details:", error);

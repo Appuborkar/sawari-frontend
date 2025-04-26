@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const PassengerForm = () => {
-  const API_BASE_URL = process.env.REACT_APP_URL; 
   const location = useLocation();
   const navigate = useNavigate();
   const busId = new URLSearchParams(location.search).get("busId");
@@ -22,7 +21,7 @@ const PassengerForm = () => {
     );
 
     if (busId) {
-      axios.get(`${API_BASE_URL}/api/bus/${busId}/price`)
+      axios.get(`http://localhost:5000/api/bus/${busId}/price`)
         .then((res) => {
           console.log("Fare Response:", res.data);
           setFareAmount(res.data.price);
@@ -110,7 +109,7 @@ const PassengerForm = () => {
   const confirmBooking = async () => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/api/booking/${busId}/confirm`,
+        `http://localhost:5000/api/booking/${busId}/confirm`,
         { busId, seat: selectedSeats, passengers: passengerDetails },
         { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } }
       );

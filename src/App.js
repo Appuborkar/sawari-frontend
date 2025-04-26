@@ -14,11 +14,10 @@ import SignInForm from "./components/Signin";
 import SignupForm from "./components/Signup";
 import Ticket from "./components/Ticket";
 import Viewticket from "./components/Viewticket";
-
 const App = () => {
   return (
     <Router>
-      <Navbar />
+      <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Signin" element={<SignInForm/>} />

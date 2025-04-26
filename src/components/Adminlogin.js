@@ -1,12 +1,8 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import "./AdminLogin.css";
-
-
 
 const AdminLogin = () => {
-  const API_BASE_URL = process.env.REACT_APP_URL; 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,9 +11,9 @@ const AdminLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${API_BASE_URL}/admin/login`, { email, password });
+      const res = await axios.post("http://localhost:5000/api/admin/login", { email, password });
       localStorage.setItem("token", res.data.token);
-      navigate("/admin/dashboard");
+      navigate("/dashboard");
     } catch (err) {
       setError("Invalid credentials");
     }
@@ -36,4 +32,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default AdminLogin;  

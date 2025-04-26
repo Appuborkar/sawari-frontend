@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 
 const MyProfile = () => {
-  const API_BASE_URL = process.env.REACT_APP_URL; 
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", mobile: "", photo: null });
   const [previewPhoto, setPreviewPhoto] = useState(null); // New state for preview image
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/api/auth/profile`, { 
+    axios.get("http://localhost:5000/api/auth/profile", { 
       headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       withCredentials: true 
     })
@@ -57,7 +56,7 @@ const MyProfile = () => {
     }
   
     try {
-      const response = await axios.put(`${API_BASE_URL}/api/auth/update-profile`, formDataToSend, {
+      const response = await axios.put("http://localhost:5000/api/auth/update-profile", formDataToSend, {
         headers: { 
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("authToken")}`
