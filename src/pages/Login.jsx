@@ -9,7 +9,7 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [loading] = useState(false);
   const navigate = useNavigate();
-  const { login} = useAuth();
+  const {login} = useAuth();
 
   const validate = () => {
     let tempErrors = {};
