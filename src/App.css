@@ -277,6 +277,11 @@
   margin-top: -8px;
 }
 
+.message{
+  color:green;
+  font-size: 1rem;
+}
+
 /* Submit button */
 .login-form button {
   background: #007bff;
@@ -307,4 +312,180 @@
   .signin-form {
     width: 90%;
   }
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 80px auto 20px auto; /* Space below navbar */
+  max-width: 65rem;
+  width: 100%;
+
+}
+
+/* Input groups with icon and select dropdown */
+.input-group {
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05);
+  width: 100%;
+
+}
+
+/* Styling for the icons inside the input groups */
+.icon {
+  font-size: 1.2rem;
+  color: var(--color);
+  margin-right: 10px;
+}
+
+/* Styling for the custom Select component */
+.search-input {
+  flex: 2;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: transparent;
+  cursor:text;
+}
+
+/* Styling for the DatePicker input */
+.search-input input {
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+  background: transparent;
+  cursor:none;
+  
+}
+
+/* Button to reverse source and destination */
+.reverse-btn {
+  background: var(--color);
+  color: white;
+  border: none;
+  padding: 0.5em;
+  border-radius:0.3rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.reverse-btn:hover {
+  background: #1a1e95;
+}
+
+/* Styling for the search button */
+.search-btn {
+  display: flex;
+  align-items: center;
+  background: var(--color);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.search-btn:hover {
+  background: #1a1e95;
+}
+
+/* Add a margin between the search icon and the text */
+.search-btn svg {
+  margin-right: 8px;
+}
+
+/* Responsive design for mobile screens */
+@media (max-width: 768px) {
+  .search-container {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+  box-shadow:none;
+  
+    width:93%;
+    height:100%;
+    
+  }
+
+  .input-group {
+    width: 100%;
+    position:relative;
+    border:1px solid var(--color);
+    border-radius:10rem;
+
+  }
+
+  .reverse-btn {
+margin-bottom: 6.39rem;
+
+color:var(--color);
+z-index:1;
+position:absolute;
+    text-align: center; 
+   padding:0.2rem;
+   border:1px solid var(--color);
+   border-radius:2rem;
+   height:2rem;
+   width:2rem;
+   background-color:white;
+  }
+    .reverse-btn:hover {
+      background-color: white;
+
+    }
+  .search-btn{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 10rem;
+    
+  }
+}
+
+/* Custom styling for react-select dropdown */
+.react-select__control {
+  border-radius: 8px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid #ddd;
+  min-height: 40px;
+}
+
+.react-select__control--is-focused {
+  border-color: var(--color);
+}
+
+.react-select__menu {
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.react-select__option {
+  padding: 10px;
+  font-size: 1rem;
+  color: var(--color);
+}
+
+.react-select__option--is-selected {
+  background: var(--color);
+  color: white;
+}
+
+.react-select__option--is-focused {
+  background: #f1f1f1;
+  color: var(--color);
 }
