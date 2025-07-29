@@ -64,7 +64,7 @@ const Login = () => {
         <form className="login-form" onSubmit={handleSubmit}>
           <h2>Sign In</h2>
           {message && <p className="message">{message}</p>}
-          <label>Email <supersubscript className="supertext">*</supersubscript></label>
+          <label className="login-label">Email <sup className="supertext">*</sup></label>
           <input
             type="email"
             name="email"
@@ -74,7 +74,7 @@ const Login = () => {
           />
           {errors.email && <span className="error">{errors.email}</span>}
 
-          <label>Password <supersubscript className="supertext">*</supersubscript></label>
+          <label className="login-label">Password <sup className="supertext">*</sup></label>
           <input
             type="password"
             name="password"

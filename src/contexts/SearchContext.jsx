@@ -32,15 +32,19 @@ export const SearchProvider = ({ children }) => {
   };
 
   const handleSearch = () => {
-    if (!source || !destination) {
+    if (!source || !destination){
       toast.warning("Please select source and destination");
       return;
     }
-    const departureDate = moment(formattedDate).format("YYYY-MM-DD");
-    navigate(`/bus-list?source=${source}&destination=${destination}&departureDate=${departureDate}`);
+    else if(source==destination){
+      toast.warning("source and destination cannot be same");
+      return
+    }
+    const departureDate = moment(formattedDate).format("DD-MM-YYYY");
+    navigate(`/bus-list?source=${source.value}&destination=${destination.value}&departureDate=${departureDate}`);
   };
 
-  const departureDate = moment(formattedDate).format("YYYY-MM-DD");
+  const departureDate = moment(formattedDate).format("DD-MM-YYYY");
 
   return (
     <SearchContext.Provider

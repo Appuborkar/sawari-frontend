@@ -1,6 +1,13 @@
 :root{
   --color: #0c0f53 ;
   --background:#29e6f0;
+    --font-xs: 0.875rem;
+  --font-sm: 1rem;
+  --font-md: 1.125rem;
+  --font-lg: 1.5rem;
+  --font-xl: 2rem;
+  --container-width: 60rem;
+  
 }
 
 .navbar {
@@ -32,11 +39,10 @@
 
 .sawari {
   font-size: 1.5rem;
-  font-weight: bold;
   color:  var(--color);
+  font-weight:650;
   margin-left: 10px;
-  font-family: "Pacifico", cursive;
-  letter-spacing: 1px;
+  letter-spacing:0.5px;
 }
 
 .nav-links {
@@ -47,17 +53,17 @@
 .nav-item {
   text-decoration: none;
   color: white;
-  font-size: 1.1rem;
-  font-weight: bold;
+  font-size: 1rem;
+  font-weight:450;
   margin: 10px 10px;
+  justify-content: space-between;
 }
 
 .my-profile {
   text-decoration: none;
   color: white;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-right: 15px;
+  font-size: 1rem;
+  font-weight: 450;
 }
 
 .active-link{
@@ -67,12 +73,10 @@
 .logout-btn {
   cursor: pointer;
   color: white;
-  font-weight: bold;
-  border-radius: 5px;
-  background:var(--color);
   border:none;
-  padding:0.5em;
-  
+  background: var(--color);
+  padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+  border-radius: 1rem;
 }
 
 .logout-btn:hover {
@@ -84,15 +88,12 @@
 /* Sign Up button */
 .signup-btn {
   background: var(--color);
-  padding: 0.5em;
-  border-radius: 5px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+  border-radius: 1rem;
+  
 }
 
-.signup-btn:hover {
-  background: #1a1e95;
-  color: white;
-}
+
 
 /* Hamburger menu */
 .hamburger {
@@ -124,22 +125,31 @@
   .hamburger {
     display: block;
   }
-  
-  .user-profile {
+  .user-links{
     display:flex;
-    flex-direction: row;
-    gap:0.3rem;
-    margin-top:0.7rem;
+    gap:1rem;
   }
 
   .logout-btn {
     width: 100%;
     text-align: center;
-  
+    margin:auto;
+    font-weight:400;
   }
 }
 
+.main-heading{
+  color:var(--color);
+  font-size:1.7rem;
+  margin-top:2rem;
+  text-align: center;
 
+}
+@media (max-width:450px){
+  .main-heading{
+    font-size:1.2rem;
+  }
+}
 /* signup form */
 .signup-container{
    display: flex;
@@ -179,7 +189,7 @@
 }
 .submitBtn{
   color:white;
-  background-color: rgb(0, 110, 255);
+  background-color:var(--color);
   padding:0.5rem;
   font-weight:600;
   border-radius: 1rem;
@@ -242,6 +252,7 @@
   display:flex;
   justify-content: center;
   
+  
 }
 .login-form {
   margin:5rem;
@@ -255,11 +266,12 @@
   justify-content: center;
   flex-direction: column;
   gap: 12px;
+  
 }
 
 .login-form h2 {
   text-align: center;
-  color: #333;
+  color:var(--color);
   margin-bottom: 10px;
 }
 
@@ -284,7 +296,7 @@
 
 /* Submit button */
 .login-form button {
-  background: #007bff;
+  background: var(--color);
   color: white;
   padding: 12px;
   border: none;
@@ -307,76 +319,78 @@
   font-size: larger;
 }
 
-/* Responsive Design */
+
 @media (max-width: 480px) {
   .signin-form {
-    width: 90%;
+    width: 100%;
   }
+
+.login-label{
+  margin-left: 0.8rem;
 }
+  
+}
+
 
 .search-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 1.25rem;
   background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 80px auto 20px auto; /* Space below navbar */
-  max-width: 65rem;
+  padding: 1.25rem;
+  border-radius: 0.625rem;
+  box-shadow: 0 0.25rem 0.625rem rgba(16, 15, 15, 0.1);
+  margin: 2rem auto 2rem auto;
+  max-width: var(--container-width);
   width: 100%;
-
+  
 }
 
-/* Input groups with icon and select dropdown */
 .input-group {
   display: flex;
   align-items: center;
   background: #f9f9f9;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05);
+  padding: 0.625rem;
+  border-radius: 0.5rem;
+  box-shadow: inset 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.05);
   width: 100%;
-
 }
 
-/* Styling for the icons inside the input groups */
 .icon {
-  font-size: 1.2rem;
+  font-size: var(--font-md);
   color: var(--color);
-  margin-right: 10px;
+  margin-right: 0.625rem;
 }
 
-/* Styling for the custom Select component */
 .search-input {
   flex: 2;
   border: none;
   outline: none;
-  font-size: 1rem;
+  font-size: var(--font-sm);
   background: transparent;
-  cursor:text;
+  font-weight:500;
+  cursor: text;
 }
 
-/* Styling for the DatePicker input */
-.search-input input {
+.input {
   width: 100%;
   border: none;
-  font-size: 1rem;
-  background: transparent;
-  cursor:none;
-  
+  font-size: var(--font-sm);
+  /* background: transparent; */
+  cursor: text;
+  /* border:0.5px solid rgb(178, 174, 174); */
 }
 
-/* Button to reverse source and destination */
+
 .reverse-btn {
   background: var(--color);
   color: white;
   border: none;
   padding: 0.5em;
-  border-radius:0.3rem;
+  border-radius: 0.3rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: var(--font-sm);
   transition: 0.3s;
 }
 
@@ -384,108 +398,498 @@
   background: #1a1e95;
 }
 
-/* Styling for the search button */
 .search-btn {
   display: flex;
   align-items: center;
   background: var(--color);
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: var(--font-sm);
   transition: 0.3s;
+}
+
+.search-btn svg {
+  margin-right: 0.5rem;
 }
 
 .search-btn:hover {
   background: #1a1e95;
 }
 
-/* Add a margin between the search icon and the text */
-.search-btn svg {
-  margin-right: 8px;
-}
-
-/* Responsive design for mobile screens */
-@media (max-width: 768px) {
-  .search-container {
+@media (max-width:768px){
+.search-container {
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 15px;
-  box-shadow:none;
-  
-    width:93%;
-    height:100%;
-    
+    gap: 0.625rem;
+    padding: 1rem;
+    box-shadow: none;
+    width: 100%;
+    height: 100%;
   }
 
   .input-group {
     width: 100%;
-    position:relative;
-    border:1px solid var(--color);
-    border-radius:10rem;
-
+    border: 1px solid var(--color);
+    border-radius: 1rem;
+    background: #f9f9f9;
   }
-
+  input{
+    padding:0.625rem;
+    margin-left:0.8rem;
+  }
+.icon{
+  font-size:var(--font-sm);
+  margin-left:1rem;
+  margin-right:0.1rem;
+}
   .reverse-btn {
-margin-bottom: 6.39rem;
-
-color:var(--color);
-z-index:1;
-position:absolute;
-    text-align: center; 
-   padding:0.2rem;
-   border:1px solid var(--color);
-   border-radius:2rem;
-   height:2rem;
-   width:2rem;
-   background-color:white;
+    margin-bottom: 7.8rem;
+    color: var(--color);
+    z-index: 1;
+    position: absolute;
+    padding: 0.2rem;
+    border: 1px solid var(--color);
+    border-radius: 2rem;
+    height: 2rem;
+    width: 2rem;
+    background-color: white;
+    transform: rotate(0.25turn);
   }
-    .reverse-btn:hover {
-      background-color: white;
 
-    }
-  .search-btn{
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  border-radius: 10rem;
+  .reverse-btn:hover {
+    background-color: white;
     
   }
+
+  .search-btn {
+    width: 100%;
+    border-radius: 5rem;
+    justify-content: center;
+    padding:0.625rem;
+  }
+
 }
 
-/* Custom styling for react-select dropdown */
-.react-select__control {
-  border-radius: 8px;
-  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05);
-  border: 1px solid #ddd;
-  min-height: 40px;
+/* Layout */
+.bus-page {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  flex-wrap: wrap;
 }
 
-.react-select__control--is-focused {
-  border-color: var(--color);
+.bus-list-section{
+  display: flex;
+  gap:2rem;
+  padding: 1rem;
+  
+}
+.filter-section {
+  display:flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 1rem;
+  /* border:1px solid gray; */
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  max-height:100%;
+  width:50%;
+}
+.filter-section div{
+  border:1px solid var(--color);
+  margin-bottom: 1rem;
+  padding:2rem;
+  border-radius:0.8rem;
+}
+.filter-section h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
-.react-select__menu {
-  background: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-}
-
-.react-select__option {
-  padding: 10px;
+.filter-section label {
+  display: block;
+  margin: 0.5rem 0;
   font-size: 1rem;
-  color: var(--color);
 }
 
-.react-select__option--is-selected {
-  background: var(--color);
+/* Bus List */
+.bus-list-container {
+  flex: 3 1 650px;
+  width:100%;
+}
+
+.heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.highlight {
+  color: #ff5733;
+}
+
+.bus-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bus-card-v {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+  width:100%;
+}
+
+.bus-card-v:hover {
+  transform: scale(1.01);
+}
+
+.ticket {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.route-info {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.arrow {
+  margin: 0 0.5rem;
+  color: #555;
+}
+
+.bus-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.bus-meta {
+  flex: 1 1 45%;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+}
+
+.bus-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2196f3;
+  margin-top: 0.5rem;
+}
+
+.bus-date {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.select-seat-btn {
+  margin-top: 0.8rem;
+  background-color: #28a745;
   color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
 }
 
-.react-select__option--is-focused {
-  background: #f1f1f1;
-  color: var(--color);
+.select-seat-btn:hover {
+  background-color: #218838;
+}
+
+.login-message {
+  color: #d9534f;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.no-bus-message {
+  text-align: center;
+  color: #777;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .bus-page {
+    flex-direction: column;
+  }
+
+  .filter-section {
+    width: 100%;
+  }
+
+  .bus-list-container {
+    width: 100%;
+  }
+
+  .bus-details {
+    flex-direction: column;
+  }
+
+  .bus-meta {
+    flex: 1 1 100%;
+  }
+}
+
+/* /public/styles.css or import as ../styles.css in your component */
+
+.popular-container {
+  padding: 2rem;
+  /* background: #f9f9f9; */
+}
+
+.popular-heading {
+  font-size: 2rem;
+  color:rgb(51, 50, 50);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.popular-card {
+  background-color: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border:1px solid gray;
+}
+
+.popular-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom:1px solid gray;
+}
+
+.popular-info {
+  padding: 1.1rem;
+  text-align: center;
+  color:rgb(29, 29, 71);
+  line-height: 1.9;
+  
+  
+}
+.seat-price{
+  color: #2196f3;
+  font-weight:700;
+}
+.price-icon{
+  font-size:0.8rem;
+  color: #2196f3;
+
+}
+.popular-btn {
+  margin-top: 1rem;
+  background-color:var(--color);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.popular-btn:hover {
+  background-color: #006bd6;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 320px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.cancel-btn {
+  margin-top: 1rem;
+  background: none;
+  color: red;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.date-input {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.bus-card {
+  width: 100%;
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.bus-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.bus-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.bus-icons .icon {
+  background: #f3f3f3;
+  border-radius: 5px;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  margin-left: 4px;
+}
+
+.bus-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.bus-time {
+  text-align: center;
+}
+
+.time {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.location {
+  font-size: 0.85rem;
+  color: gray;
+}
+
+.bus-icon-center {
+  font-size: 2rem;
+  color: red;
+}
+
+.bus-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.price {
+  font-weight: 600;
+  color: #222;
+}
+
+.price span {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.seats {
+  font-size: 0.85rem;
+  color: green;
+}
+
+.reserve-button {
+  background-color: #e60000;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.route-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  flex-wrap: wrap; /* for mobile responsiveness */
+}
+
+.city-name {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+.route-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bus-icon {
+  font-size: 20px;
+  padding: 8px;
+  border: 3px solid #000;
+  border-radius: 12px;
+}
+
+.dots {
+  display: flex;
+  gap: 4px;
+}
+
+.dots::before {
+  content: "••••••";
+  letter-spacing: 4px;
+  color: #000;
+}
+
+@media (max-width: 480px) {
+  .route-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bus-icon {
+    font-size: 18px;
+    padding: 6px;
+    border-width: 2px;
+  }
 }
