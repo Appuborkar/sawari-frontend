@@ -5,7 +5,7 @@ import { FaCalendarAlt, FaExchangeAlt, FaMapMarkerAlt, FaSearch } from "react-ic
 import Select from "react-select";
 import { useSearch } from '../contexts/SearchContext';
 
-const SearchBox=({variant="default"})=> {
+const SearchBox=()=> {
 
 const {places,source,destination,formattedDate,setSource,setDestination,setFormattedDate,handleReverse,handleSearch}=useSearch();
 

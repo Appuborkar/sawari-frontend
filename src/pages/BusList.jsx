@@ -1,11 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSearch } from "../contexts/SearchContext";
 import { useAuth } from "../contexts/AuthContext";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { FaBusAlt, FaClock, FaMapMarkerAlt, FaRupeeSign, FaTicketAlt, FaUser } from "react-icons/fa";
+import moment from "moment";
 
 const BusList = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const source = queryParams.get("source");
   const destination = queryParams.get("destination");
@@ -17,6 +22,22 @@ const BusList = () => {
   const [showNonAC, setShowNonAC] = useState(false);
   const [selectedOperators, setSelectedOperators] = useState([]);
   const { user, loading } = useAuth();
+  const { formattedDate, setFormattedDate } = useSearch();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleDateChange = (date) => {
+    setFormattedDate(date)
+    const departureDate = moment(date).format("DD-MM-YYYY")
+
+    const newParams = new URLSearchParams();
+    newParams.set("source", source);
+    newParams.set("destination", destination);
+    newParams.set("departureDate", departureDate);
+
+    navigate(`${location.pathname}?${newParams.toString()}`);
+    setShowModal(false);
+  };
+
 
   useEffect(() => {
     if (source && destination && departureDate) {
@@ -39,7 +60,7 @@ const BusList = () => {
       setSelectedOperators(prev => [...prev, operatorName]);
     }
   };
-  
+
   useEffect(() => {
     let result = [...buses];
     if (sortBy === "lowToHigh") {
@@ -130,14 +151,34 @@ const BusList = () => {
             <h2 className="heading">
               Available Buses from <span className="highlight">{source}</span> to{" "}
               <span className="highlight">{destination}</span> on{" "}
-              <span className="highlight">{departureDate}</span>
+              <button style={{ border: '1px solid gray', background: 'white', color: 'red', borderRadius: "0.5rem", padding: "0.5rem", position: "relative" }} onClick={() => setShowModal(true)}>
+                {departureDate}</button>
+              {showModal && (
+                <div className="datepicker-container">
+                  <DatePicker
+                    selected={formattedDate}
+                    onChange={handleDateChange}
+                    minDate={new Date()}
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="dd/mm/yyyy"
+                    inline
+
+                  />
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="cancel-btn">Cancel
+                  </button>
+                </div>
+              )
+
+              }
             </h2>
             <ul className="bus-list">
               {filteredBuses.map((bus) => (
                 <li key={bus._id} className="bus-card-v">
                   <div className="ticket">
                     <div className="route-info">
-                      <p><FaBusAlt/>{bus.operator}</p>
+                      <p><FaBusAlt />{bus.operator}</p>
                       <div>
                         <span>{bus.source}</span>
                         <span>{bus.destination}</span>
@@ -152,13 +193,13 @@ const BusList = () => {
                         <span>{bus.distance}</span>
                       </div>
                       <div>
-                        <span><FaRupeeSign/>{bus.price}</span>
+                        <span><FaRupeeSign />{bus.price}</span>
                         <span>{bus.departureDate}</span>
                         <button>Select Seat</button>
                       </div>
                       <div><span>only {bus.availableSeatsCount} seats left</span></div>
                       <div>
-                        
+
                       </div>
                     </div>
                     {user ? (
@@ -182,7 +223,9 @@ const BusList = () => {
       </main>
 
     </div>
+
   );
+
 };
 
 export default BusList;
