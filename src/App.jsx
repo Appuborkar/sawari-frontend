@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import Home from './pages/Home';
 import ProtectedRoute from './components/ProtectedRoute'
 import BusList from './pages/BusList'
-
+import SeatMapping from './components/SeatMapping'
 
 function App() {
 
@@ -32,6 +32,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/bus-list' element={<BusList />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/select-seat' element={<SeatMapping />} />
       </Routes>
     </>
   )

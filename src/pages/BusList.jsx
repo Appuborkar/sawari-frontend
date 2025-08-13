@@ -1,16 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useSearch } from "../contexts/SearchContext";
-import { useAuth } from "../contexts/AuthContext";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { FaBusAlt, FaClock, FaMapMarkerAlt, FaRupeeSign, FaTicketAlt, FaUser } from "react-icons/fa";
-import moment from "moment";
+import { FaFilter ,FaTimesCircle} from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import BusCard from "../components/BusCard";
+import Filters from "../components/Filters";
+import BackButton from "../components/BackButton";
 
 const BusList = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const source = queryParams.get("source");
   const destination = queryParams.get("destination");
@@ -20,24 +19,10 @@ const BusList = () => {
   const [sortBy, setSortBy] = useState("");
   const [showAC, setShowAC] = useState(false);
   const [showNonAC, setShowNonAC] = useState(false);
+  const [operators,setOperators]=useState([]);
   const [selectedOperators, setSelectedOperators] = useState([]);
-  const { user, loading } = useAuth();
-  const { formattedDate, setFormattedDate } = useSearch();
-  const [showModal, setShowModal] = useState(false);
-
-  const handleDateChange = (date) => {
-    setFormattedDate(date)
-    const departureDate = moment(date).format("DD-MM-YYYY")
-
-    const newParams = new URLSearchParams();
-    newParams.set("source", source);
-    newParams.set("destination", destination);
-    newParams.set("departureDate", departureDate);
-
-    navigate(`${location.pathname}?${newParams.toString()}`);
-    setShowModal(false);
-  };
-
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const { loading } = useAuth();
 
   useEffect(() => {
     if (source && destination && departureDate) {
@@ -46,8 +31,12 @@ const BusList = () => {
           `http://localhost:5000/api/bus/search?source=${source}&destination=${destination}&departureDate=${departureDate}`
         )
         .then((response) => {
-          setBuses(response.data);
-          setFilteredBuses(response.data);
+          const data=response.data
+          setBuses(data);
+          setFilteredBuses(data);
+          const uniqueOperators=[...new Set(data.map(bus=>bus.operator))];
+          setOperators(uniqueOperators);
+          
         })
         .catch((error) => console.error("Error fetching buses:", error));
     }
@@ -85,144 +74,72 @@ const BusList = () => {
     setFilteredBuses(result);
   }, [sortBy, buses, showAC, showNonAC, selectedOperators]);
 
+  const clearFilters = () => {
+    setSortBy("");
+    setShowAC(false);
+    setShowNonAC(false);
+    setSelectedOperators([]);
+  };
+  const isFilterActive = sortBy !== "" || showAC || showNonAC || selectedOperators.length > 0;
 
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="bus-page">
-      <aside className="filter-section">
-        <div>
-          <h4>Price</h4>
-          <label>
-            <input
-              type="radio"
-              name="sort"
-              value="lowToHigh"
-              onChange={() => setSortBy("lowToHigh")}
-            />
-            Low to High
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="sort"
-              value="highToLow"
-              onChange={() => setSortBy("highToLow")}
-            />
-            High to Low
-          </label>
-        </div>
-        <div>
-          <h4>Bus type</h4>
-          <label>
-            <input
-              type="checkbox"
-              checked={showAC}
-              onChange={() => setShowAC(!showAC)}
-            />
-            AC
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={showNonAC}
-              onChange={() => setShowNonAC(!showNonAC)}
-            />
-            Non-AC
-          </label>
-        </div>
-        <div>
-          <h4>Bus Operator</h4>
-          {["Neeta Travels", "MSRTC"].map(op => (
-            <label key={op}>
-              <input
-                type="checkbox"
-                checked={selectedOperators.includes(op)}
-                onChange={() => handleOperatorChange(op)}
-              />
-              {op}
-            </label>
-          ))}
-        </div>
-      </aside>
-      <main className="bus-list-container">
-        {filteredBuses.length > 0 ? (
-          <div>
-            <h2 className="heading">
-              Available Buses from <span className="highlight">{source}</span> to{" "}
-              <span className="highlight">{destination}</span> on{" "}
-              <button style={{ border: '1px solid gray', background: 'white', color: 'red', borderRadius: "0.5rem", padding: "0.5rem", position: "relative" }} onClick={() => setShowModal(true)}>
-                {departureDate}</button>
-              {showModal && (
-                <div className="datepicker-container">
-                  <DatePicker
-                    selected={formattedDate}
-                    onChange={handleDateChange}
-                    minDate={new Date()}
-                    dateFormat="dd/MM/yyyy"
-                    placeholderText="dd/mm/yyyy"
-                    inline
-
-                  />
-                  <button
-                    onClick={() => setShowModal(false)}
-                    className="cancel-btn">Cancel
-                  </button>
-                </div>
-              )
-
-              }
-            </h2>
-            <ul className="bus-list">
-              {filteredBuses.map((bus) => (
-                <li key={bus._id} className="bus-card-v">
-                  <div className="ticket">
-                    <div className="route-info">
-                      <p><FaBusAlt />{bus.operator}</p>
-                      <div>
-                        <span>{bus.source}</span>
-                        <span>{bus.destination}</span>
-                      </div>
-                      <div>
-                        <span>{bus.boardingTime}</span>
-                        <span>{bus.duration}</span>
-                        <span>{bus.alightingTime}</span>
-                      </div>
-                      <div>
-                        <span>{bus.busType}</span>
-                        <span>{bus.distance}</span>
-                      </div>
-                      <div>
-                        <span><FaRupeeSign />{bus.price}</span>
-                        <span>{bus.departureDate}</span>
-                        <button>Select Seat</button>
-                      </div>
-                      <div><span>only {bus.availableSeatsCount} seats left</span></div>
-                      <div>
-
-                      </div>
-                    </div>
-                    {user ? (
-                      <Link
-                        to={`/select-seat?busId=${bus._id}`}
-                        className="select-seat-btn"
-                      >
-                        Select Seat
-                      </Link>
-                    ) : (
-                      <p className="login-message">Please log in to book a seat.</p>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
+    <>
+    <BackButton title={'Back'}/>
+    <button className="filter-btn-mobile" onClick={()=>setIsFilterOpen(true)}>
+        <FaFilter/>
+      </button>
+     {isFilterOpen ? (
+    
+      <div className={`mobile-filter-container ${isFilterOpen ? "show" : ""}`}>
+        <div className="mobile">
+          <Filters
+             sortBy={sortBy}
+            setSortBy={setSortBy}
+            showAC={showAC}
+            setShowAC={setShowAC}
+            showNonAC={showNonAC}
+            setShowNonAC={setShowNonAC}
+            selectedOperators={selectedOperators}
+            handleOperatorChange={handleOperatorChange}
+            clearFilters={clearFilters}
+            isFilterActive={isFilterActive}
+            operators={operators}
+          />
           </div>
-        ) : (
-          <p className="no-bus-message">No buses available for the selected route.</p>
-        )}
-      </main>
+           <button
+            className="apply-filters-btn"
+            onClick={() => setIsFilterOpen(false)}
+          >
+            Apply Filters
+          </button>
+          </div>
+      ):(
+      <div className="bus-page">
+        <aside className="filter-section">
+          <Filters 
+          sortBy={sortBy}
+            setSortBy={setSortBy}
+            showAC={showAC}
+            setShowAC={setShowAC}
+            showNonAC={showNonAC}
+            setShowNonAC={setShowNonAC}
+            selectedOperators={selectedOperators}
+            handleOperatorChange={handleOperatorChange}
+            clearFilters={clearFilters}
+            isFilterActive={isFilterActive}
+            operators={operators} />
+        </aside>
+        <main className="bus-list-container">
+          <BusCard buses={filteredBuses}
+            source={source}
+            destination={destination}
+            departureDate={departureDate} />
+        </main>
+      </div>)}
 
-    </div>
+    </>
 
   );
 
