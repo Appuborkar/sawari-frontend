@@ -32,7 +32,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/bus-list' element={<BusList />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/select-seat' element={<SeatMapping />} />
+        <Route path='/select-seat/:busId' element={<SeatMapping />} />
       </Routes>
     </>
   )

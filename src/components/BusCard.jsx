@@ -45,7 +45,7 @@ const BusCard = ({
                       <span className="ticket-price"><FaRupeeSign />{bus.price}</span>
 
                       <span><Link
-                        to={`/select-seat?busId=${bus._id}`}
+                        to={`/select-seat/${bus._id}`}
                         className="select-seat-btn"
                       >
                         Select Seat
