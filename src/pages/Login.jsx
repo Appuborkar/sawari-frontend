@@ -10,7 +10,7 @@ const Login = () => {
   const [loading] = useState(false);
   const navigate = useNavigate();
   const {login} = useAuth();
-
+const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
   const validate = () => {
     let tempErrors = {};
 
@@ -35,7 +35,7 @@ const Login = () => {
       try {
         
         const response = await axios.post(
-          "http://localhost:5000/api/auth/login",
+          `${API_URL}/api/auth/login`,
           {
             email: formData.email,
             password: formData.password,

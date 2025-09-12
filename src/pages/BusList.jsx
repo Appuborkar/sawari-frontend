@@ -28,7 +28,7 @@ const BusList = () => {
     if (source && destination && departureDate) {
       axios
         .get(
-          `http://localhost:5000/api/bus/search?source=${source}&destination=${destination}&departureDate=${departureDate}`
+          `${API_URL}/api/bus/search?source=${source}&destination=${destination}&departureDate=${departureDate}`
         )
         .then((response) => {
           const data=response.data

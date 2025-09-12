@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token')
   }
 
+  const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
   useEffect(() => {
     const fetchUser = async() => {
       if (!token) {
@@ -27,8 +28,8 @@ export const AuthProvider = ({ children }) => {
         return;
       }
       try {
-         
-        const res =await axios.get("http://localhost:5000/api/auth/user", {
+        
+        const res =await axios.get(`${API_URL}/api/auth/user`, {
             headers: { Authorization: `Bearer ${token}` },
           });
         setUser(res.data.user);

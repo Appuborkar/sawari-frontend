@@ -4,8 +4,8 @@ import io from "socket.io-client";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GiSteeringWheel } from "react-icons/gi";
-
-const socket = io("http://localhost:5000");
+const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
+const socket = io(`${API_URL}`);
 
 const MAX_SEATS = 5;
 
@@ -19,7 +19,7 @@ const SeatMapping = ({ onSeatsSelected }) => {
     const fetchSeats = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/booking/${busId}/seats`,
+          `${API_URL}/api/booking/${busId}/seats`,
           // { withCredentials: true }
         );
 
@@ -88,30 +88,6 @@ const SeatMapping = ({ onSeatsSelected }) => {
 
     setSelectedSeats(updatedSelection);
 
-    
-    // try {
-    //   if (selectedSeats.includes(seat.seatNumber)) {
-    //     await axios.post(
-    //       `http://localhost:5000/api/booking/${busId}/cancel-hold`,
-    //       { seats: [seat.seatNumber] },
-    //       { withCredentials: true }
-    //     );
-    //     setSelectedSeats((prev) =>
-    //       prev.filter((s) => s !== seat.seatNumber)
-    //     );
-    //   } 
-    //   else {
-    //     const res = await axios.post(
-    //       `http://localhost:5000/api/booking/${busId}/hold`,
-    //       { seats: [seat.seatNumber] },
-    //       { withCredentials: true }
-    //     );
-    //     setSelectedSeats((prev) => [...prev, seat.seatNumber]);
-    //     setHolder(res.data.holder); 
-    //   }
-    // } catch (err) {
-    //   toast.warning(err.response?.data?.message || "Error handling seat");
-    // }
   };
 
   
