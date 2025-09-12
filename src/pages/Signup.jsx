@@ -21,7 +21,9 @@ const Signup = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
-const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
+
+  const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
+  
   const validate = () => {
     const temp = {};
     if (!formData.name.trim()) temp.name = "Name is required";
