@@ -2,16 +2,23 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate ,Link} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import {toast} from 'react-toastify';
+import {useBooking} from '../contexts/BookingContext';
 
 const Login = () => {
+
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [loading] = useState(false);
   const navigate = useNavigate();
   const {login} = useAuth();
-const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
+  const {clearBookingData} = useBooking();
+  const redirectPath=sessionStorage.getItem("redirectAfterLogin");
+  const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
+
   const validate = () => {
+
     let tempErrors = {};
 
     if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
@@ -24,11 +31,11 @@ const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleChange = (e) => {
+    const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validate()) {
@@ -51,11 +58,18 @@ const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
 
         login(userData, authToken); 
         setMessage("Login successful")
-        navigate("/");
+        if(redirectPath){
+        navigate(`${redirectPath}`);
+        clearBookingData();
+        sessionStorage.removeItem("redirectAfterLogin");
+        }
+        else{
+        navigate("/");}
         
       } catch (error) {
         console.error("Login failed", error.response?.data || error.message);
-        alert(JSON.stringify(error.response?.data, null, 2));
+       
+        toast.error(JSON.stringify(error.response?.data, null, 2));
       }
     }
   };

@@ -7,9 +7,9 @@ import Login from './pages/Login'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import Home from './pages/Home';
-import ProtectedRoute from './components/ProtectedRoute'
 import BusList from './pages/BusList'
-import SeatMapping from './components/SeatMapping'
+import SeatMap from './pages/SeatMap';
+
 
 function App() {
 
@@ -24,7 +24,7 @@ function App() {
         pauseOnHover
         draggable
         theme="light"
-        
+
       />
       <Navbar />
       <Routes>
@@ -33,7 +33,7 @@ function App() {
         <Route path='/bus-list' element={<BusList />} />
         <Route path='/login' element={<Login />} />
         <Route path='/select-seat/:busId' element={
-          <ProtectedRoute><SeatMapping /></ProtectedRoute>} />
+          <SeatMap />} />
       </Routes>
     </>
   )

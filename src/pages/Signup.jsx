@@ -21,7 +21,7 @@ const Signup = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
-
+  const redirectPath=sessionStorage.getItem("redirectAfterLogin");
   const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
   
   const validate = () => {
@@ -66,7 +66,14 @@ const Signup = () => {
 
       if (result.authToken) {
         login(result.user, result.authToken);
-        navigate("/");
+
+         if(redirectPath){
+        navigate(`${redirectPath}`);
+        clearBookingData();
+        sessionStorage.removeItem("redirectAfterLogin");
+        }
+        else{
+        navigate("/");}
       } else {
         setMessage(result.msg || "Signup failed");
       }

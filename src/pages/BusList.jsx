@@ -23,7 +23,7 @@ const BusList = () => {
   const [selectedOperators, setSelectedOperators] = useState([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { loading } = useAuth();
-const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
+  const API_URL ="http://localhost:5000";
   useEffect(() => {
     if (source && destination && departureDate) {
       axios

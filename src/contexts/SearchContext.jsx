@@ -12,8 +12,8 @@ export const SearchProvider = ({ children }) => {
   const [destination, setDestination] = useState(null);
   const [formattedDate, setFormattedDate] = useState(new Date());
 
-  const navigate = useNavigate();
-const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
+const navigate = useNavigate();
+const API_URL = "http://localhost:5000";
   useEffect(() => {
     axios.get(`${API_URL}/api/place`)
       .then(response => {
