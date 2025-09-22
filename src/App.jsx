@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import Home from './pages/Home';
 import BusList from './pages/BusList'
 import SeatMap from './pages/SeatMap';
+import PassengerForm from './pages/PassengerForm'
 
 
 function App() {
@@ -32,8 +33,10 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/bus-list' element={<BusList />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/select-seat/:busId' element={
-          <SeatMap />} />
+        <Route path='/select-seat/:busId' element={<SeatMap />} />
+        <Route path='/passenger-form' element={<PassengerForm />} />
+          
+          
       </Routes>
     </>
   )
