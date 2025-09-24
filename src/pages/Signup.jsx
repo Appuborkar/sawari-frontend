@@ -22,7 +22,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
   const redirectPath=sessionStorage.getItem("redirectAfterLogin");
-  const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
   
   const validate = () => {
     const temp = {};

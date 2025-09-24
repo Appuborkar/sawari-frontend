@@ -13,7 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const {login} = useAuth();
   const redirectPath=sessionStorage.getItem("redirectAfterLogin");
-  const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const validate = () => {
 

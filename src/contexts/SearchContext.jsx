@@ -19,8 +19,14 @@ export const SearchProvider = ({ children }) => {
     const fetchPlaces = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/place`);
+        
+        const dataArray = Array.isArray(response.data)
+          ? response.data
+          : Array.isArray(response.data.places)
+          ? response.data.places
+          : [];
 
-        const formattedPlaces = response.data.map((place) => ({
+        const formattedPlaces = dataArray.map((place) => ({
           value: place.place,
           label: place.place,
         }));
