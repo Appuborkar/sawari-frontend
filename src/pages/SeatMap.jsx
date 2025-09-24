@@ -95,7 +95,8 @@ useEffect(() => {
     try {
       await axios.post(`${API_URL}/api/booking/${busId}/hold`, bookingData);
       toast.success("Seats held successfully!");
-      const isLoggedIn = localStorage.getItem("token");
+      const isLoggedIn = token;
+  
       if (!isLoggedIn) {
         sessionStorage.setItem("redirectAfterLogin", "/passenger-form");
         navigate("/login");
