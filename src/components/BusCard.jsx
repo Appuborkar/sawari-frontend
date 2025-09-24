@@ -1,5 +1,4 @@
 import { FaBusAlt, FaRupeeSign } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useBooking } from "../contexts/BookingContext";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +11,7 @@ const BusCard = ({
 }) => {
   const { loading } = useAuth();
   const navigate = useNavigate();
-  const { clearBookingData } = useBooking();
+  const {setBookingData,clearBookingData } = useBooking();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -60,6 +59,11 @@ const BusCard = ({
                           onClick={() => {
                             clearBookingData();
                             navigate(`/select-seat/${bus._id}`);
+                            setBookingData(prev=>({
+                              ...prev,
+                              source:bus.source,
+                              destination:bus.destination
+                            }))
                           }}
                         >
                           Select Seat

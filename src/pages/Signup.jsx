@@ -27,9 +27,9 @@ const Signup = () => {
   const validate = () => {
     const temp = {};
     if (!formData.name.trim()) temp.name = "Name is required";
-    if (!/^\S+@\S+\.\S+$/.test(formData.email)) temp.email = "Invalid email";
-    if (!/^\d{10}$/.test(formData.mobile)) temp.mobile = "10-digit number only";
-    if (formData.password.length < 8) temp.password = "Min 8 characters";
+    if (!/^\S+@\S+\.\S+$/.test(formData.email)) temp.email = "Please enter valid email";
+    if (!/^\d{10}$/.test(formData.mobile)) temp.mobile = "Mobile no must be 10 digits";
+    if (formData.password.length <= 8 && !/[A-Z]/.test(formData.password)) temp.password = "Password must be 8 characters & must contain one upperCase letter";
     if (formData.password !== formData.confirmPassword)
       temp.confirmPassword = "Passwords do not match";
     setErrors(temp);
@@ -69,7 +69,6 @@ const Signup = () => {
 
          if(redirectPath){
         navigate(`${redirectPath}`);
-        clearBookingData();
         sessionStorage.removeItem("redirectAfterLogin");
         }
         else{

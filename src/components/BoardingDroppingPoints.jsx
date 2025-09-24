@@ -3,23 +3,31 @@ import { toast } from "react-toastify";
 import { useBooking } from "../contexts/BookingContext";
 
 const BoardingDroppingPoints = ({ boardingPoints, droppingPoints }) => {
+
+  const {bookingData,setBookingData}=useBooking();
+
   const {
-    selectedSeats,
     selectedBoarding,
-    setSelectedBoarding,
     selectedDropping,
-    setSelectedDropping,
-  } = useBooking();
+  
+  } = bookingData;
 
-  const handleBoardingChange = (point) => {
+const handleBoardingChange = (point) => {
+  setBookingData(prev => ({
+    ...prev,
+    selectedBoarding: point.location,
+    boardingTime: point.time
+  }));
+};
 
-    setSelectedBoarding(point.location);
-  };
+ const handleDroppingChange = (point) => {
+  setBookingData(prev => ({
+    ...prev,
+    selectedDropping: point.location,
+    droppingTime: point.time
+  }));
+};
 
-  const handleDroppingChange = (point) => {
-    
-    setSelectedDropping(point.location);
-  };
 
   return (
     <div className="points-container">

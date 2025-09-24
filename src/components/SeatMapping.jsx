@@ -2,14 +2,17 @@ import React from "react";
 import { toast } from "react-toastify";
 import { useBooking } from "../contexts/BookingContext";
 import { GiSteeringWheel } from "react-icons/gi";
+import { v4 as uuidv4 } from "uuid";
 
 const MAX_SEATS = 5;
 
 const SeatMapping = ({ seats, setSeats }) => {
-  const { selectedSeats, setSelectedSeats } = useBooking();
+
+  const { bookingData, setBookingData } = useBooking();
+  const { selectedSeats } = bookingData;
 
   const handleSeatClick = (seat) => {
-    if (!seat || seat.status === "booked") return;
+    if (!seat || seat.status === "booked" || seat.status==="temp") return;
 
     if (!selectedSeats.includes(seat.seatNumber) && selectedSeats.length >= MAX_SEATS) {
       toast.warning(`You can only select up to ${MAX_SEATS} seats.`);
@@ -20,7 +23,32 @@ const SeatMapping = ({ seats, setSeats }) => {
       ? selectedSeats.filter((s) => s !== seat.seatNumber)
       : [...selectedSeats, seat.seatNumber];
 
-    setSelectedSeats(updatedSelection);
+    setBookingData((prev) => ({
+      ...prev,
+      selectedSeats: updatedSelection
+    }));
+
+    setSeats((prev) =>
+      prev.map((s) =>
+        s.seatNumber === seat.seatNumber
+          ? { ...s, status: selectedSeats.includes(s.seatNumber) ? "available" : "selected" }
+          : s
+      )
+    );
+
+        const token = localStorage.getItem("token");
+    if (!token) {
+      if (!sessionStorage.getItem("guestId")) {
+        const newGuestId = uuidv4();
+        sessionStorage.setItem("guestId", newGuestId);
+      }
+
+      // Remove guestId if all seats deselected
+      if (updatedSelection.length === 0) {
+        sessionStorage.removeItem("guestId");
+      }
+    }
+
   };
 
   const renderBusLayout = () => {
@@ -59,9 +87,13 @@ const SeatMapping = ({ seats, setSeats }) => {
         <span className="status booked">Booked</span>
         <span className="status selected">Selected</span>
       </div>
+
+      
       <div className="driver">
         <GiSteeringWheel />
       </div>
+
+  
       <div className="bus-layout">{renderBusLayout()}</div>
     </div>
   );

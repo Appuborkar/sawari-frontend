@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useNavigate ,Link} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import {toast} from 'react-toastify';
-import {useBooking} from '../contexts/BookingContext';
 
 const Login = () => {
 
@@ -13,7 +12,6 @@ const Login = () => {
   const [loading] = useState(false);
   const navigate = useNavigate();
   const {login} = useAuth();
-  const {clearBookingData} = useBooking();
   const redirectPath=sessionStorage.getItem("redirectAfterLogin");
   const API_URL = import.meta.env.VITE_APP_URL || "http://localhost:5000";
 
@@ -24,8 +22,8 @@ const Login = () => {
     if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
       tempErrors.email = "Invalid email format";
 
-    if (formData.password.length < 8)
-      tempErrors.password = "Password must be at least 8 characters";
+    if (formData.password.length <= 8 && !/[A-Z]/.test(formData.password))
+      tempErrors.password = "Password must be at least 8 characters & must contain one uppercase letter";
 
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
@@ -60,7 +58,7 @@ const Login = () => {
         setMessage("Login successful")
         if(redirectPath){
         navigate(`${redirectPath}`);
-        clearBookingData();
+  
         sessionStorage.removeItem("redirectAfterLogin");
         }
         else{

@@ -12,7 +12,8 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const SeatMap = () => {
   const { busId } = useParams();
   const navigate = useNavigate();
-  const { selectedSeats, selectedBoarding, selectedDropping } = useBooking();
+  const {bookingData,setBookingData}=useBooking()
+  const { selectedSeats, selectedBoarding, selectedDropping } =bookingData;
 
   const [seats, setSeats] = useState([]);
   const [boardingPoints, setBoardingPoints] = useState([]);
@@ -26,13 +27,18 @@ const SeatMap = () => {
     const newSocket = io(API_URL);
     setSocket(newSocket);
 
+    // Join bus-specific room for updates
+    newSocket.emit("join-bus-room", busId);
+
     return () => {
+      newSocket.emit("leave-bus-room", busId);
       newSocket.disconnect();
     };
-  }, []);
+  }, [busId]);
+
 
   // Fetch seats & set socket listeners
-  useEffect(() => {
+useEffect(() => {
     const fetchSeats = async () => {
       setLoading(true);
       try {
@@ -40,7 +46,7 @@ const SeatMap = () => {
         setSeats(data.seat || []);
         setBoardingPoints(data.boardingPoints || []);
         setDroppingPoints(data.droppingPoints || []);
-        setPrice(data.price)
+        setPrice(data.price);
       } catch (err) {
         console.error("Error fetching seats:", err);
         toast.error("Failed to load seat details.");
@@ -52,6 +58,7 @@ const SeatMap = () => {
 
     if (!socket) return;
 
+    // Listen for seat updates
     socket.on("seat-updated", (updatedSeats) => {
       setSeats((prev) =>
         prev.map((s) => {
@@ -61,21 +68,23 @@ const SeatMap = () => {
       );
     });
 
-    socket.on("seatReleased", ({ seatNumber, status }) => {
-      setSeats((prev) =>
-        prev.map((s) => (s.seatNumber === seatNumber ? { ...s, status } : s))
-      );
-    });
-
     return () => {
-      socket.off("seat-updated");
-      socket.off("seatReleased");
+      socket?.off("seat-updated");
     };
   }, [busId, socket]);
+
+  useEffect(()=>{
+    const totalFare = price * selectedSeats.length;
+    setBookingData(prev=>({
+      ...prev,
+      totalFare:totalFare
+    }));
+  },[price,selectedSeats,setBookingData])
 
   const handleContinue = async () => {
     const bookingData = {
       busId,
+      guestId: sessionStorage.getItem("guestId") || null,
       seats: selectedSeats,
       boardingPoint: selectedBoarding,
       droppingPoint: selectedDropping,
@@ -100,6 +109,7 @@ const SeatMap = () => {
   const isAllSelected = selectedSeats.length > 0 && selectedBoarding && selectedDropping;
 
   const totalFare = price * selectedSeats.length;
+
   if (loading) return <p>Loading seat map...</p>;
 
   return (

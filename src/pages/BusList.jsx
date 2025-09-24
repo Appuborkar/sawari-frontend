@@ -7,8 +7,10 @@ import { useAuth } from "../contexts/AuthContext";
 import BusCard from "../components/BusCard";
 import Filters from "../components/Filters";
 import BackButton from "../components/BackButton";
+import {useBooking} from '../contexts/BookingContext';
 
 const BusList = () => {
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const source = queryParams.get("source");
@@ -23,7 +25,17 @@ const BusList = () => {
   const [selectedOperators, setSelectedOperators] = useState([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { loading } = useAuth();
-  const API_URL ="http://localhost:5000";
+  const {clearBookingData}=useBooking();
+  
+  const API_URL = "http://localhost:5000";
+
+  useEffect(()=>{
+    if(location.state?.fromSeatMap){
+      clearBookingData();
+    }
+
+  },[location,clearBookingData])
+
   useEffect(() => {
     if (source && destination && departureDate) {
       axios
@@ -95,7 +107,7 @@ const BusList = () => {
       <div className={`mobile-filter-container ${isFilterOpen ? "show" : ""}`}>
         <div className="mobile">
           <Filters
-             sortBy={sortBy}
+            sortBy={sortBy}
             setSortBy={setSortBy}
             showAC={showAC}
             setShowAC={setShowAC}

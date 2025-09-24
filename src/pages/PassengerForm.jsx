@@ -1,25 +1,26 @@
-import React from 'react'
-import {useSearch} from '../contexts/SearchContext'
+import React from 'react';
+import {useBooking} from '../contexts/BookingContext';
 
 const PassengerForm = () => {
 
-    
+    const {bookingData}=useBooking();
+    const {selectedSeats,source,destination,selectedDropping,selectedBoarding,boardingTime,droppingTime,totalFare}=bookingData;
     return (
         <div>
             <div>
                 <h1>Booking Summary</h1>
                 <div>
                     <span>{source}</span>
-                    {/* <span>{boardingPoint.location}</span>
-                    <span>{boardingPoint.time}</span> */}
+                    <span>{selectedBoarding}</span>
+                    <span>{boardingTime}</span>
                 </div>
-                {/* <div> */}
+                <div> 
                     <span>{destination}</span>
-                    {/* <span>{boardingPoint.location}</span>
-                    <span>{boardingPoint.time}</span>
+                     <span>{selectedDropping}</span>
+                    <span>{droppingTime}</span>
                 </div>
-                <span>Seat No:{seats}</span>
-                <span>Total Fare:{fare}</span> */}
+                <span>Seat No:{selectedSeats}</span>
+                <span>Total Fare:{totalFare}</span>
             </div>
             <div>
 
