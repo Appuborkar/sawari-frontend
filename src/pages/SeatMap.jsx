@@ -84,7 +84,7 @@ useEffect(() => {
   const handleContinue = async () => {
     const bookingData = {
       busId,
-      guestId: sessionStorage.getItem("guestId") || null,
+      guestId: sessionStorage.getItem("guestId") || localStorage.getItem("token"),
       seats: selectedSeats,
       boardingPoint: selectedBoarding,
       droppingPoint: selectedDropping
