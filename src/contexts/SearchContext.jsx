@@ -13,7 +13,7 @@ export const SearchProvider = ({ children }) => {
   const [formattedDate, setFormattedDate] = useState(new Date());
 
 const navigate = useNavigate();
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     axios.get(`${API_URL}/api/place`)
       .then(response => {
@@ -27,8 +27,8 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
   }, []);
 
   const handleReverse = () => {
-    setSource(prev => destination);
-    setDestination(prev => source);
+    setSource(destination);
+    setDestination(source);
   };
 
   const handleSearch = () => {
