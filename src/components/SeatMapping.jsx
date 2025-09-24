@@ -43,7 +43,6 @@ const SeatMapping = ({ seats, setSeats }) => {
         sessionStorage.setItem("guestId", newGuestId);
       }
 
-      // Remove guestId if all seats deselected
       if (updatedSelection.length === 0) {
         sessionStorage.removeItem("guestId");
       }

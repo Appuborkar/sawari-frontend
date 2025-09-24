@@ -87,7 +87,7 @@ useEffect(() => {
       guestId: sessionStorage.getItem("guestId") || null,
       seats: selectedSeats,
       boardingPoint: selectedBoarding,
-      droppingPoint: selectedDropping,
+      droppingPoint: selectedDropping
     };
 
     try {
