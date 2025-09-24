@@ -6,10 +6,12 @@ import { toast } from "react-toastify";
 import { io } from "socket.io-client";
 import axios from "axios";
 import { useBooking } from "../contexts/BookingContext";
+import { useAuth } from "../contexts/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const SeatMap = () => {
+  const { token } = useAuth();
   const { busId } = useParams();
   const navigate = useNavigate();
   const {bookingData,setBookingData}=useBooking()
@@ -84,7 +86,7 @@ useEffect(() => {
   const handleContinue = async () => {
     const bookingData = {
       busId,
-      guestId: sessionStorage.getItem("guestId") || localStorage.getItem("token"),
+      guestId: sessionStorage.getItem("guestId") || token,
       seats: selectedSeats,
       boardingPoint: selectedBoarding,
       droppingPoint: selectedDropping
