@@ -12,19 +12,28 @@ export const SearchProvider = ({ children }) => {
   const [destination, setDestination] = useState(null);
   const [formattedDate, setFormattedDate] = useState(new Date());
 
-const navigate = useNavigate();
-const API_URL = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
-    axios.get(`${API_URL}/api/place`)
-      .then(response => {
-        const formattedPlaces = response.data.map(place => ({
+    const fetchPlaces = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/place`);
+
+        const formattedPlaces = response.data.map((place) => ({
           value: place.place,
           label: place.place,
         }));
+
         setPlaces(formattedPlaces);
-      })
-      .catch(error => console.error("Error fetching places", error));
-  }, []);
+      } catch (error) {
+        console.error("Error fetching places:", error);
+        toast.error("Failed to load places");
+      }
+    };
+
+    fetchPlaces();
+  }, [API_URL]);
 
   const handleReverse = () => {
     setSource(destination);
@@ -32,16 +41,19 @@ const API_URL = import.meta.env.VITE_API_URL;
   };
 
   const handleSearch = () => {
-    if (!source || !destination){
+    if (!source?.value || !destination?.value) {
       toast.warning("Please select source and destination");
       return;
     }
-    else if(source==destination){
-      toast.warning("source and destination cannot be same");
-      return
+    if (source.value === destination.value) {
+      toast.warning("Source and destination cannot be the same");
+      return;
     }
+
     const departureDate = moment(formattedDate).format("DD-MM-YYYY");
-    navigate(`/bus-list?source=${source.value}&destination=${destination.value}&departureDate=${departureDate}`);
+    navigate(
+      `/bus-list?source=${source.value}&destination=${destination.value}&departureDate=${departureDate}`
+    );
   };
 
   const departureDate = moment(formattedDate).format("DD-MM-YYYY");
@@ -58,7 +70,7 @@ const API_URL = import.meta.env.VITE_API_URL;
         setFormattedDate,
         handleSearch,
         handleReverse,
-        departureDate
+        departureDate,
       }}
     >
       {children}
@@ -66,4 +78,4 @@ const API_URL = import.meta.env.VITE_API_URL;
   );
 };
 
-export const useSearch = () =>useContext(SearchContext);
+export const useSearch = () => useContext(SearchContext);
