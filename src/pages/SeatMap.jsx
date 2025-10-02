@@ -11,12 +11,12 @@ import { useAuth } from "../contexts/AuthContext";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const SeatMap = () => {
+
   const { token } = useAuth();
   const { busId } = useParams();
   const navigate = useNavigate();
-  const {bookingData,setBookingData}=useBooking()
-  const { selectedSeats, selectedBoarding, selectedDropping } =bookingData;
-
+  const {bookingData,setBookingData} = useBooking()
+  const { selectedSeats, selectedBoarding, selectedDropping } = bookingData;
   const [seats, setSeats] = useState([]);
   const [boardingPoints, setBoardingPoints] = useState([]);
   const [droppingPoints, setDroppingPoints] = useState([]);
@@ -37,7 +37,6 @@ const SeatMap = () => {
       newSocket.disconnect();
     };
   }, [busId]);
-
 
   // Fetch seats & set socket listeners
 useEffect(() => {
@@ -77,6 +76,7 @@ useEffect(() => {
 
   useEffect(()=>{
     const totalFare = price * selectedSeats.length;
+  
     setBookingData(prev=>({
       ...prev,
       totalFare:totalFare
@@ -129,7 +129,6 @@ useEffect(() => {
             Continue
           </button>
         </div>)}
-
     </>
   );
 };

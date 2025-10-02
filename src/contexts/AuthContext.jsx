@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
             headers: { Authorization: `Bearer ${token}` },
           });
         setUser(res.data.user);
+        
       }
       catch (err) {
         console.error("Error fetching user profile:", err);

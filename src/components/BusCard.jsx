@@ -61,6 +61,7 @@ const BusCard = ({
                             navigate(`/select-seat/${bus._id}`);
                             setBookingData(prev=>({
                               ...prev,
+                              busId:bus._id,
                               source:bus.source,
                               destination:bus.destination
                             }))

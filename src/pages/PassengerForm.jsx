@@ -1,70 +1,221 @@
-import React,{useState,useEffect} from 'react';
-import {useBooking} from '../contexts/BookingContext';
+import React, { useState } from "react";
+import { useBooking } from "../contexts/BookingContext";
+import { useAuth } from "../contexts/AuthContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const PassengerForm = () => {
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const { bookingData } = useBooking();
+  const { user } = useAuth();
+  const userId = user?._id;
 
-    const {bookingData}=useBooking();
-    const {selectedSeats,source,destination,selectedDropping,selectedBoarding,boardingTime,droppingTime,totalFare}=bookingData;
-    const [formData,setFormData]=useState({
-        name:'',
-        age:'',
-        gender:''})
-    const [contactData,setContactData]=useState({
-        email:'',
-        mobile:''
-    })
+  const {
+    selectedSeats,
+    busId,
+    source,
+    destination,
+    selectedDropping,
+    selectedBoarding,
+    boardingTime,
+    droppingTime,
+    totalFare,
+  } = bookingData;
 
+  const [formData, setFormData] = useState({
+    email: "",
+    mobile: "",
+    passengers: selectedSeats.map((seat) => ({
+      seatNumber: seat,
+      name: "",
+      age: "",
+      gender: "",
+    })),
+  });
 
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        //submit form data to backend
+  const validate = () => {
+    let tempErrors = {};
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      tempErrors.email = "Enter valid email format";
     }
-        
-    return (
+
+    if (!/^\d{10}$/.test(formData.mobile)) {
+      tempErrors.mobile = "Mobile number must be 10 digits";
+    }
+
+    formData.passengers.forEach((p, index) => {
+      if (!/^[a-zA-Z\s]{3,}$/.test(p.name)) {
+        tempErrors[`name${index}`] =
+          "Name must be at least 3 characters (letters only)";
+      }
+      if (!/^\d+$/.test(p.age) || p.age < 12 || p.age > 100) {
+        tempErrors[`age${index}`] = "Age must be between 12 and 100";
+      }
+      if (!p.gender) {
+        tempErrors[`gender${index}`] = "Select your gender";
+      }
+    });
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handlePassengerChange = (index, e) => {
+    const updatedPassengers = [...formData.passengers];
+    updatedPassengers[index][e.target.name] = e.target.value;
+    setFormData({ ...formData, passengers: updatedPassengers });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setLoading(true);
+
+    // match backend schema
+    const payload = {
+      userId,
+      seats: selectedSeats,
+      boardingPoint: selectedBoarding,
+      droppingPoint: selectedDropping,
+      totalFare,
+      contactInfo: {
+        email: formData.email,
+        mobile: Number(formData.mobile),
+      },
+      passengers: formData.passengers.map((p) => ({
+        name: p.name,
+        age: Number(p.age),
+        gender: p.gender,
+      })),
+    };
+
+    console.log("Submitting payload:", payload);
+
+    try {
+      const result = await axios.post(`${API_URL}/api/booking/${busId}/confirm`,
+        payload);
+
+      if (result.data.ok) {
+        toast.success("Booking Confirmed");
+      } else {
+        toast.error(result.data.message || "Booking failed");
+      }
+    } catch (error) {
+      console.error("Error confirming booking:", error);
+      toast.error("Failed to confirm booking");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <div>
+        <h1>Booking Summary</h1>
         <div>
-            <div>
-                <h1>Booking Summary</h1>
-                <div>
-                    <span>{source}</span>
-                    <span>{selectedBoarding}</span>
-                    <span>{boardingTime}</span>
-                </div>
-                <div> 
-                    <span>{destination}</span>
-                     <span>{selectedDropping}</span>
-                    <span>{droppingTime}</span>
-                </div>
-                <span>Seat No:{selectedSeats}</span>
-                <span>Total Fare:{totalFare}</span>
-            </div>
-            <div>
-
-                <form onSubmit={handleSubmit}>
-                    <h1>Contact Details</h1>
-                    <label htmlFor="Email">Email</label>
-                        <input type="email" name="email" id="email" placeholder='e.g. example@gmail.com' required />
-                     <label htmlFor="Mobile No">Mobile </label>
-                        <input type="text" name="name" id="name" placeholder='e.g. 9988776655' required />
-                    <h1>Passenger Details</h1>
-                    {selectedSeats.map((index)=>(
-                        <div key={index}>
-                            <h2>Passenger {index+1}</h2>
-                    <label htmlFor="Name">Passenger Name</label>
-                        <input type="text" name="name" id="name" placeholder='Passenger Name' required />
-                    <label htmlFor="Age">Age</label>
-                        <input type="number" name="age" id="age" placeholder='e.g. 18' required />
-                    <label htmlFor="Gender">Gender:</label>
-                    <label htmlFor="Male">Male</label>
-                    <input type="radio" name="gender" id="" value='1'/>
-                    <label htmlFor="Female">Female</label>
-                    <input type="radio" name="gender" id="" value='1'/>
-                    </div>))}
-                    <button type="submit">Confirm Booking</button>
-                </form>
-            </div>
+          <span>{source} → {destination}</span>
         </div>
-    )
-}
+        <div>
+          <span>Boarding: {selectedBoarding} ({boardingTime})</span>
+        </div>
+        <div>
+          <span>Dropping: {selectedDropping} ({droppingTime})</span>
+        </div>
+        <div>
+          <span>Seats: {selectedSeats.join(", ")}</span>
+        </div>
+        <div>
+          <span>Total Fare: ₹{totalFare}</span>
+        </div>
+      </div>
 
-export default PassengerForm
+      <form onSubmit={handleSubmit}>
+        <h2>Contact Details</h2>
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="e.g. example@gmail.com"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        {errors.email && <p className="error">{errors.email}</p>}
+
+        <label>Mobile</label>
+        <input
+          type="tel"
+          name="mobile"
+          placeholder="e.g. 9988776655"
+          value={formData.mobile}
+          onChange={handleChange}
+          required
+        />
+        {errors.mobile && <p className="error">{errors.mobile}</p>}
+
+        <h2>Passenger Details</h2>
+        {formData.passengers.map((passenger, index) => (
+          <div key={passenger.seatNumber} className="passenger-block">
+            <h3>Passenger for Seat {passenger.seatNumber}</h3>
+
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              value={passenger.name}
+              onChange={(e) => handlePassengerChange(index, e)}
+              placeholder="Passenger Name"
+              required
+            />
+            {errors[`name${index}`] && (
+              <p className="error">{errors[`name${index}`]}</p>
+            )}
+
+            <label>Age</label>
+            <input
+              type="number"
+              name="age"
+              value={passenger.age}
+              onChange={(e) => handlePassengerChange(index, e)}
+              placeholder="e.g. 18"
+              required
+            />
+            {errors[`age${index}`] && (
+              <p className="error">{errors[`age${index}`]}</p>
+            )}
+
+            <label>Gender</label>
+            <select
+              name="gender"
+              value={passenger.gender}
+              onChange={(e) => handlePassengerChange(index, e)}
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+            {errors[`gender${index}`] && (
+              <p className="error">{errors[`gender${index}`]}</p>
+            )}
+          </div>
+        ))}
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Submitting..." : "Confirm Booking"}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default PassengerForm;
