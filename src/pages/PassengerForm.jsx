@@ -86,10 +86,8 @@ const PassengerForm = () => {
       boardingPoint: selectedBoarding,
       droppingPoint: selectedDropping,
       totalFare,
-      contactInfo: {
         email: formData.email,
         mobile: Number(formData.mobile),
-      },
       passengers: formData.passengers.map((p) => ({
         name: p.name,
         age: Number(p.age),
