@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useBooking } from "../contexts/BookingContext";
 import { GiSteeringWheel } from "react-icons/gi";
 import { v4 as uuidv4 } from "uuid";
+import { useAuth } from "../contexts/AuthContext";
 
 const MAX_SEATS = 5;
 
@@ -10,6 +11,7 @@ const SeatMapping = ({ seats, setSeats }) => {
 
   const { bookingData, setBookingData } = useBooking();
   const { selectedSeats } = bookingData;
+  const { token } = useAuth();
 
   const handleSeatClick = (seat) => {
     if (!seat || seat.status === "booked" || seat.status==="temp") return;
@@ -36,7 +38,6 @@ const SeatMapping = ({ seats, setSeats }) => {
       )
     );
 
-        const token = localStorage.getItem("token");
     if (!token) {
       if (!sessionStorage.getItem("guestId")) {
         const newGuestId = uuidv4();
@@ -88,12 +89,14 @@ const SeatMapping = ({ seats, setSeats }) => {
       </div>
 
       
+      <div className="layout-page">
       <div className="driver">
         <GiSteeringWheel />
       </div>
 
   
       <div className="bus-layout">{renderBusLayout()}</div>
+      </div>
     </div>
   );
 };

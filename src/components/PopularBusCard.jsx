@@ -13,14 +13,11 @@ const popularRoutes = [
 ];
 
 const PopularBusCard = () => {
-  const { setSource, setDestination, setFormattedDate } = useSearch();
-  const navigate = useNavigate();
+    const { setSource, setDestination, setFormattedDate } = useSearch();
+    const navigate = useNavigate();
 
-  const handleBookNow = (route) => {
-  const now=moment()
-  const fourhourslater=moment().add(4,'hours')
-  const defaultDate=fourhourslater.isSame(now,'day') ? now:now.add(1,'day')
-  const departureDate = moment(defaultDate).format("DD-MM-YYYY");
+    const handleBookNow = (route) => {
+    const departureDate = moment().format("DD-MM-YYYY");
 
     setFormattedDate(departureDate);
     setSource({ value: route.source, label: route.source });

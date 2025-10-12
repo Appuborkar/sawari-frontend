@@ -1,45 +1,34 @@
-import BoardingDroppingPoints from "../components/BoardingDroppingPoints";
-import SeatMapping from "../components/SeatMapping";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { io } from "socket.io-client";
 import axios from "axios";
+import BoardingDroppingPoints from "../components/BoardingDroppingPoints";
+import SeatMapping from "../components/SeatMapping";
 import { useBooking } from "../contexts/BookingContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useReleaseSeats } from "../hooks/useReleaseSeats";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const SeatMap = () => {
 
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const { busId } = useParams();
+  console.log("Busid", busId);
   const navigate = useNavigate();
-  const {bookingData,setBookingData} = useBooking()
+  const { bookingData, setBookingData } = useBooking();
   const { selectedSeats, selectedBoarding, selectedDropping } = bookingData;
+
   const [seats, setSeats] = useState([]);
   const [boardingPoints, setBoardingPoints] = useState([]);
   const [droppingPoints, setDroppingPoints] = useState([]);
   const [price, setPrice] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [socket, setSocket] = useState(null);
 
-  // Initialize socket
+  useReleaseSeats();
+
+
   useEffect(() => {
-    const newSocket = io(API_URL);
-    setSocket(newSocket);
-
-    // Join bus-specific room for updates
-    newSocket.emit("join-bus-room", busId);
-
-    return () => {
-      newSocket.emit("leave-bus-room", busId);
-      newSocket.disconnect();
-    };
-  }, [busId]);
-
-  // Fetch seats & set socket listeners
-useEffect(() => {
     const fetchSeats = async () => {
       setLoading(true);
       try {
@@ -47,7 +36,7 @@ useEffect(() => {
         setSeats(data.seat || []);
         setBoardingPoints(data.boardingPoints || []);
         setDroppingPoints(data.droppingPoints || []);
-        setPrice(data.price);
+        setPrice(data.price || 0);
       } catch (err) {
         console.error("Error fetching seats:", err);
         toast.error("Failed to load seat details.");
@@ -55,49 +44,28 @@ useEffect(() => {
         setLoading(false);
       }
     };
+
     fetchSeats();
+  }, [busId]);
 
-    if (!socket) return;
-
-    // Listen for seat updates
-    socket.on("seat-updated", (updatedSeats) => {
-      setSeats((prev) =>
-        prev.map((s) => {
-          const updated = updatedSeats.find((u) => u.seatNumber === s.seatNumber);
-          return updated ? { ...s, ...updated } : s;
-        })
-      );
-    });
-
-    return () => {
-      socket?.off("seat-updated");
-    };
-  }, [busId, socket]);
-
-  useEffect(()=>{
+  useEffect(() => {
     const totalFare = price * selectedSeats.length;
-  
-    setBookingData(prev=>({
-      ...prev,
-      totalFare:totalFare
-    }));
-  },[price,selectedSeats,setBookingData])
+    setBookingData((prev) => ({ ...prev, totalFare }));
+  }, [price, selectedSeats, setBookingData]);
+
+  const userId = token ? user?._id : sessionStorage.getItem("guestId");
+  const bookingPayload = {
+    userId,
+    seats: selectedSeats,
+    boardingPoint: selectedBoarding,
+    droppingPoint: selectedDropping,
+  };
 
   const handleContinue = async () => {
-    const bookingData = {
-      busId,
-      guestId: sessionStorage.getItem("guestId") || token,
-      seats: selectedSeats,
-      boardingPoint: selectedBoarding,
-      droppingPoint: selectedDropping
-    };
-
     try {
-      await axios.post(`${API_URL}/api/booking/${busId}/hold`, bookingData);
+      await axios.post(`${API_URL}/api/booking/${busId}/hold`, bookingPayload);
       toast.success("Seats held successfully!");
-      const isLoggedIn = token;
-  
-      if (!isLoggedIn) {
+      if (!token) {
         sessionStorage.setItem("redirectAfterLogin", "/passenger-form");
         navigate("/login");
       } else {
@@ -110,26 +78,29 @@ useEffect(() => {
   };
 
   const isAllSelected = selectedSeats.length > 0 && selectedBoarding && selectedDropping;
-
   const totalFare = price * selectedSeats.length;
 
   if (loading) return <p>Loading seat map...</p>;
 
   return (
-    <>
+    <div className="seatmap-page">
       <SeatMapping seats={seats} setSeats={setSeats} />
-      <BoardingDroppingPoints boardingPoints={boardingPoints} droppingPoints={droppingPoints} />
-      {isAllSelected && (
-        <div>
-          <div>
-            <span>Selected Seats: {selectedSeats.join(", ")}</span>
-            <span>Total Price: {totalFare}</span>
+      <aside className="pointsAside">
+      <BoardingDroppingPoints
+        boardingPoints={boardingPoints}
+        droppingPoints={droppingPoints}
+      />
+      
+        <section className="booking-summary">
+          <div >
+          <p>Selected Seats: {selectedSeats.join(", ")}</p>
+          <p>Total Price: ₹{totalFare}</p>
           </div>
-          <button onClick={handleContinue}>
-            Continue
-          </button>
-        </div>)}
-    </>
+          {isAllSelected && (<button onClick={handleContinue} className={`continueBtn`}>Continue</button>)}
+        </section>
+      
+      </aside>
+    </div>
   );
 };
 

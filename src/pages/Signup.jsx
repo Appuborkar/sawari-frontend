@@ -3,6 +3,9 @@ import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate,Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useBookingActions } from '../hooks/useBookingActions'
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Signup = () => {
   const { login } = useAuth();
@@ -22,7 +25,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
   const redirectPath=sessionStorage.getItem("redirectAfterLogin");
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const {transferHold}=useBookingActions();
   
   const validate = () => {
     const temp = {};
@@ -69,6 +72,9 @@ const Signup = () => {
 
          if(redirectPath){
         navigate(`${redirectPath}`);
+
+        await transferHold(result.authToken);
+        sessionStorage.removeItem("guestId");
         sessionStorage.removeItem("redirectAfterLogin");
         }
         else{

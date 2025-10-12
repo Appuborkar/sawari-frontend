@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import BusList from './pages/BusList'
 import SeatMap from './pages/SeatMap';
 import PassengerForm from './pages/PassengerForm'
+import Ticket from './pages/Ticket';
 
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/select-seat/:busId' element={<SeatMap />} />
         <Route path='/passenger-form' element={<PassengerForm />} />
-          
+        <Route path='/ticket/:bookingId' element={<Ticket/>}/>
           
       </Routes>
     </>

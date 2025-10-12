@@ -4,47 +4,52 @@ import { useBooking } from "../contexts/BookingContext";
 
 const BoardingDroppingPoints = ({ boardingPoints, droppingPoints }) => {
 
-  const {bookingData,setBookingData}=useBooking();
+  const { bookingData, setBookingData } = useBooking();
 
   const {
     selectedBoarding,
     selectedDropping,
-  
+
   } = bookingData;
 
-const handleBoardingChange = (point) => {
-  setBookingData(prev => ({
-    ...prev,
-    selectedBoarding: point.location,
-    boardingTime: point.time
-  }));
-};
+  const handleBoardingChange = (point) => {
+    setBookingData(prev => ({
+      ...prev,
+      selectedBoarding: point.location,
+      boardingTime: point.time
+    }));
+  };
 
- const handleDroppingChange = (point) => {
-  setBookingData(prev => ({
-    ...prev,
-    selectedDropping: point.location,
-    droppingTime: point.time
-  }));
-};
+  const handleDroppingChange = (point) => {
+    setBookingData(prev => ({
+      ...prev,
+      selectedDropping: point.location,
+      droppingTime: point.time
+    }));
+  };
 
 
   return (
     <div className="points-container">
       <div className="point-select">
-        <h3>Boarding Points</h3>
+        <h3 className="points-heading board">Boarding Points</h3>
         {boardingPoints?.length ? (
           boardingPoints.map((point, index) => (
-            <label key={index} style={{ display: "block", margin: "6px 0" }}>
+            <label key={index} className='points boarding'>
               <input
                 type="radio"
                 name="boarding"
                 value={point.location}
                 checked={selectedBoarding === point.location}
                 onChange={() => handleBoardingChange(point)}
+
+
               />
-              <span style={{ marginLeft: "8px", fontWeight: "500" }}>
-                {point.location} — <small>{point.time}</small>
+              <span className="point-location">
+                {point.location}
+              </span>
+              <span>
+                {point.time}
               </span>
             </label>
           ))
@@ -53,21 +58,26 @@ const handleBoardingChange = (point) => {
         )}
       </div>
 
-      <div className="point-select" style={{ marginTop: "20px" }}>
-        <h3>Dropping Points</h3>
+      <div className="point-select">
+        <h3 className="points-heading drop">Dropping Points</h3>
         {droppingPoints?.length ? (
           droppingPoints.map((point, index) => (
-            <label key={index} style={{ display: "block", margin: "6px 0" }}>
+            <label key={index} className='points dropping'>
               <input
                 type="radio"
                 name="dropping"
                 value={point.location}
                 checked={selectedDropping === point.location}
                 onChange={() => handleDroppingChange(point)}
+
               />
-              <span style={{ marginLeft: "8px", fontWeight: "500" }}>
-                {point.location} — <small>{point.time}</small>
+              <span className="point-location">
+                {point.location}
               </span>
+              <span>
+                {point.time}
+              </span>
+
             </label>
           ))
         ) : (

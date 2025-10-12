@@ -6,6 +6,8 @@ import moment from 'moment';
 
 const SearchContext = createContext();
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 export const SearchProvider = ({ children }) => {
   const [places, setPlaces] = useState([]);
   const [source, setSource] = useState(null);
@@ -13,7 +15,6 @@ export const SearchProvider = ({ children }) => {
   const [formattedDate, setFormattedDate] = useState(new Date());
 
   const navigate = useNavigate();
-  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchPlaces = async () => {

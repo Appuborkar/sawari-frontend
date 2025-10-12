@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { useBooking } from "../contexts/BookingContext";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const PassengerForm = () => {
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-  const { bookingData } = useBooking();
+
+  const { bookingData ,clearBookingData} = useBooking();
   const { user } = useAuth();
   const userId = user?._id;
-
+  const navigate=useNavigate();
+  
   const {
     selectedSeats,
     busId,
@@ -79,7 +83,6 @@ const PassengerForm = () => {
     if (!validate()) return;
     setLoading(true);
 
-    // match backend schema
     const payload = {
       userId,
       seats: selectedSeats,
@@ -95,23 +98,22 @@ const PassengerForm = () => {
       })),
     };
 
-    console.log("Submitting payload:", payload);
+try {
+  const result = await axios.post(`${API_URL}/api/booking/${busId}/confirm`, payload);
 
-    try {
-      const result = await axios.post(`${API_URL}/api/booking/${busId}/confirm`,
-        payload);
-
-      if (result.data.ok) {
-        toast.success("Booking Confirmed");
-      } else {
-        toast.error(result.data.message || "Booking failed");
-      }
-    } catch (error) {
-      console.error("Error confirming booking:", error);
-      toast.error("Failed to confirm booking");
-    } finally {
-      setLoading(false);
-    }
+  if (result.data.ok) {
+    toast.success("Booking Confirmed");
+    console.log(result.data)
+    navigate(`/ticket/${result.data.bookingId}`)
+    clearBookingData();
+  }
+} catch (error) {
+  const msg = error.response?.data?.message || "Failed to confirm booking";
+  console.error("Error confirming booking:", msg);
+  toast.error(msg);
+} finally {
+  setLoading(false);
+}
   };
 
   return (
