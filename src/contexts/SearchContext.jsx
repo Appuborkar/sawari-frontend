@@ -45,7 +45,7 @@ export const SearchProvider = ({ children }) => {
   const handleReverse = () => {
     setSource(destination);
     setDestination(source);
-  };
+  };   
 
   const handleSearch = () => {
     if (!source?.value || !destination?.value) {
