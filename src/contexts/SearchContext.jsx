@@ -35,7 +35,7 @@ export const SearchProvider = ({ children }) => {
         setPlaces(formattedPlaces);
       } catch (error) {
         console.error("Error fetching places:", error);
-        toast.error("Failed to load places");
+
       }
     };
 
