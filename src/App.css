@@ -1435,7 +1435,7 @@ margin-right:1rem;
 
 
 /* booking summary */
-.booking-summary{
+.seats-summary{
   border:1px solid gray;
   border-radius:1rem;
   padding:1rem;
@@ -1495,3 +1495,475 @@ margin-right:1rem;
   }
 }
 
+/* Root layout */
+.passenger-form-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: "Poppins", sans-serif;
+}
+
+/* Header & Summary */
+.booking-summary {
+  /* background: linear-gradient(135deg, #0077ff, #00b3ff); */
+  background-color: var(--color);
+  color: white;
+  padding: 1.2rem 1.8rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+}
+
+.booking-summary h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.booking-summary span {
+  display: block;
+  font-size: 1rem;
+  margin: 4px 0;
+}
+
+/* Form layout */
+.passenger-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.passenger-form h2 {
+  font-size: 1.4rem;
+  color: #222;
+  margin-bottom: 0.5rem;
+  border-left: 5px solid var(--color);
+  padding-left: 10px;
+}
+
+.passenger-form label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+/* Input fields */
+.passenger-form input,
+.passenger-form select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.passenger-form input:focus,
+.passenger-form select:focus {
+  border-color: #0077ff;
+  box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+}
+
+/* Passenger block */
+.passenger-block {
+  background: #f8f9fc;
+  border: 1px solid #e3e6ef;
+  border-radius: 14px;
+  padding: 1rem 1.5rem;
+  margin-top: 1rem;
+}
+
+.passenger-block h3 {
+  color:var(--color);
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+/* Error messages */
+.error {
+  color: #ff3b3b;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* Submit button */
+.passenger-form button {
+  /* background: linear-gradient(135deg, #0077ff, #00b3ff); */
+  background-color: var(--color);
+  color: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.passenger-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
+}
+
+.passenger-form button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .passenger-form-container {
+    padding: 1.5rem;
+  }
+
+  .booking-summary h1 {
+    font-size: 1.4rem;
+  }
+
+  .passenger-block {
+    padding: 1rem;
+  }
+
+  .passenger-form button {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .passenger-form-container {
+    margin: 20px;
+    padding: 1.2rem;
+  }
+
+  .booking-summary {
+    padding: 1rem;
+  }
+
+  .passenger-form h2 {
+    font-size: 1.2rem;
+  }
+
+  .passenger-form input,
+  .passenger-form select {
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+
+  .passenger-form button {
+    width: 100%;
+  }
+}
+
+
+/* ---------- Page Layout ---------- */
+.ticket-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  font-family: "Poppins", sans-serif;
+  background: #eef3f8;
+  min-height: 100vh;
+}
+
+/* ---------- Ticket Card ---------- */
+.ticket-card {
+  width: 100%;
+  max-width: 650px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 2rem;
+  position: relative;
+}
+
+/* ---------- Header ---------- */
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px dashed #007bff;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ticket-header h1 {
+  color: #007bff;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.ticket-number {
+  background: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* ---------- Route Section ---------- */
+.route-section h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.route-section span {
+  color: #007bff;
+  font-weight: 700;
+}
+
+.route-section .date {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* ---------- Info Blocks ---------- */
+.bus-info, .passenger-info {
+  background: #f8faff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.bus-info h3, .passenger-info h3 {
+  color: #007bff;
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+
+/* ---------- Passenger Rows ---------- */
+.passenger-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.6rem;
+  margin-bottom: 0.5rem;
+  transition: 0.3s ease;
+}
+
+.passenger-row:hover {
+  background: #f0f7ff;
+}
+
+/* ---------- Footer ---------- */
+.ticket-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px dashed #007bff;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+}
+
+.qr-section {
+  text-align: center;
+}
+
+.qr-section p {
+  font-size: 0.75rem;
+  color: #555;
+  margin-top: 6px;
+}
+
+.footer-text {
+  text-align: right;
+  color: #444;
+  font-size: 0.9rem;
+}
+
+/* ---------- Button ---------- */
+.download-btn-container {
+  margin-top: 1.5rem;
+}
+
+.download-btn-container button {
+  background: linear-gradient(135deg, #007bff, #00c2ff);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.download-btn-container button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 123, 255, 0.3);
+}
+
+/* ---------- Loading / Error ---------- */
+.loading, .error-msg {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: 3rem;
+  color: #333;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .ticket-card {
+    padding: 1.5rem;
+  }
+
+  .ticket-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .route-section h2 {
+    font-size: 1.1rem;
+  }
+
+  .passenger-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-text {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ticket-card {
+    padding: 1.2rem;
+  }
+
+  .ticket-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .passenger-row {
+    grid-template-columns: 1fr;
+  }
+
+  .download-btn-container button {
+    width: 100%;
+  }
+}
+
+/* ---------- Footer Base ---------- */
+.footer {
+  background-color: var(--color);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 2rem 1rem 2rem;
+  line-height: 1.6;
+}
+
+/* ---------- Footer Container ---------- */
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ---------- Footer Sections ---------- */
+.footer-section {
+  flex: 1 1 250px;
+  min-width: 220px;
+}
+
+.footer-section h3 {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  border-bottom: 2px solid #fff;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+/* ---------- Contact Info ---------- */
+.contact p {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+}
+
+.footer-icon {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* ---------- Social Media ---------- */
+.social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-color: #0056b3;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.icon-link:hover {
+  background-color: #004494;
+  transform: scale(1.1);
+}
+
+/* ---------- Footer Bottom / Copyright ---------- */
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 1rem;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+}
+
+/* ---------- Responsive Tweaks ---------- */
+@media (max-width: 768px) {
+  
+  
+  .social-icons {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-section h3 {
+    font-size: 0.6rem;
+  }
+  
+  .footer-icon {
+    font-size: 0.6rem;
+  }
+  
+  
+  .icon-link {
+    width: 32px;
+    height: 32px;
+    font-size: 0.6rem;
+  }
+  
+  .footer-bottom {
+    font-size: 0.6rem;
+  }
+}

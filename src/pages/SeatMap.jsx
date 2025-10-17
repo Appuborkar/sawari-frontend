@@ -14,7 +14,6 @@ const SeatMap = () => {
 
   const { token, user } = useAuth();
   const { busId } = useParams();
-  console.log("Busid", busId);
   const navigate = useNavigate();
   const { bookingData, setBookingData } = useBooking();
   const { selectedSeats, selectedBoarding, selectedDropping } = bookingData;
@@ -91,7 +90,7 @@ const SeatMap = () => {
         droppingPoints={droppingPoints}
       />
       
-        <section className="booking-summary">
+        <section className="seats-summary">
           <div >
           <p>Selected Seats: {selectedSeats.join(", ")}</p>
           <p>Total Price: ₹{totalFare}</p>

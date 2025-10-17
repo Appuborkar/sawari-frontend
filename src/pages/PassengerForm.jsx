@@ -103,7 +103,6 @@ try {
 
   if (result.data.ok) {
     toast.success("Booking Confirmed");
-    console.log(result.data)
     navigate(`/ticket/${result.data.bookingId}`)
     clearBookingData();
   }
@@ -111,111 +110,104 @@ try {
   const msg = error.response?.data?.message || "Failed to confirm booking";
   console.error("Error confirming booking:", msg);
   toast.error(msg);
+  navigate(`/select-seat/${busId}`);
 } finally {
   setLoading(false);
 }
   };
 
-  return (
-    <div>
-      <div>
-        <h1>Booking Summary</h1>
-        <div>
-          <span>{source} → {destination}</span>
-        </div>
-        <div>
-          <span>Boarding: {selectedBoarding} ({boardingTime})</span>
-        </div>
-        <div>
-          <span>Dropping: {selectedDropping} ({droppingTime})</span>
-        </div>
-        <div>
-          <span>Seats: {selectedSeats.join(", ")}</span>
-        </div>
-        <div>
-          <span>Total Fare: ₹{totalFare}</span>
-        </div>
-      </div>
-
-      <form onSubmit={handleSubmit}>
-        <h2>Contact Details</h2>
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="e.g. example@gmail.com"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        {errors.email && <p className="error">{errors.email}</p>}
-
-        <label>Mobile</label>
-        <input
-          type="tel"
-          name="mobile"
-          placeholder="e.g. 9988776655"
-          value={formData.mobile}
-          onChange={handleChange}
-          required
-        />
-        {errors.mobile && <p className="error">{errors.mobile}</p>}
-
-        <h2>Passenger Details</h2>
-        {formData.passengers.map((passenger, index) => (
-          <div key={passenger.seatNumber} className="passenger-block">
-            <h3>Passenger for Seat {passenger.seatNumber}</h3>
-
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              value={passenger.name}
-              onChange={(e) => handlePassengerChange(index, e)}
-              placeholder="Passenger Name"
-              required
-            />
-            {errors[`name${index}`] && (
-              <p className="error">{errors[`name${index}`]}</p>
-            )}
-
-            <label>Age</label>
-            <input
-              type="number"
-              name="age"
-              value={passenger.age}
-              onChange={(e) => handlePassengerChange(index, e)}
-              placeholder="e.g. 18"
-              required
-            />
-            {errors[`age${index}`] && (
-              <p className="error">{errors[`age${index}`]}</p>
-            )}
-
-            <label>Gender</label>
-            <select
-              name="gender"
-              value={passenger.gender}
-              onChange={(e) => handlePassengerChange(index, e)}
-              required
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-            {errors[`gender${index}`] && (
-              <p className="error">{errors[`gender${index}`]}</p>
-            )}
-          </div>
-        ))}
-
-        <button type="submit" disabled={loading}>
-          {loading ? "Submitting..." : "Confirm Booking"}
-        </button>
-      </form>
+ return (
+  <div className="passenger-form-container">
+    <div className="booking-summary">
+      <h1>Booking Summary</h1>
+      <span>{source} → {destination}</span>
+      <span>Boarding: {selectedBoarding} ({boardingTime})</span>
+      <span>Dropping: {selectedDropping} ({droppingTime})</span>
+      <span>Seats: {selectedSeats.join(", ")}</span>
+      <span>Total Fare: ₹{totalFare}</span>
     </div>
-  );
+
+    <form onSubmit={handleSubmit} className="passenger-form">
+      <h2>Contact Details</h2>
+
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        placeholder="e.g. example@gmail.com"
+        value={formData.email}
+        onChange={handleChange}
+        required
+      />
+      {errors.email && <p className="error">{errors.email}</p>}
+
+      <label>Mobile</label>
+      <input
+        type="tel"
+        name="mobile"
+        placeholder="e.g. 9988776655"
+        value={formData.mobile}
+        onChange={handleChange}
+        required
+      />
+      {errors.mobile && <p className="error">{errors.mobile}</p>}
+
+      <h2>Passenger Details</h2>
+      {formData.passengers.map((passenger, index) => (
+        <div key={passenger.seatNumber} className="passenger-block">
+          <h3>Passenger for Seat {passenger.seatNumber}</h3>
+
+          <label>Name</label>
+          <input
+            type="text"
+            name="name"
+            value={passenger.name}
+            onChange={(e) => handlePassengerChange(index, e)}
+            placeholder="Passenger Name"
+            required
+          />
+          {errors[`name${index}`] && (
+            <p className="error">{errors[`name${index}`]}</p>
+          )}
+
+          <label>Age</label>
+          <input
+            type="number"
+            name="age"
+            value={passenger.age}
+            onChange={(e) => handlePassengerChange(index, e)}
+            placeholder="e.g. 18"
+            required
+          />
+          {errors[`age${index}`] && (
+            <p className="error">{errors[`age${index}`]}</p>
+          )}
+
+          <label>Gender</label>
+          <select
+            name="gender"
+            value={passenger.gender}
+            onChange={(e) => handlePassengerChange(index, e)}
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          {errors[`gender${index}`] && (
+            <p className="error">{errors[`gender${index}`]}</p>
+          )}
+        </div>
+      ))}
+
+      <button type="submit" disabled={loading}>
+        {loading ? "Submitting..." : "Confirm Booking"}
+      </button>
+    </form>
+  </div>
+);
+
 };
 
 export default PassengerForm;
