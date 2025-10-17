@@ -1660,202 +1660,140 @@ margin-right:1rem;
 }
 
 
-/* ---------- Page Layout ---------- */
-.ticket-page {
+/* ---------- Global ---------- */
+.ticket-container {
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
-  font-family: "Poppins", sans-serif;
-  background: #eef3f8;
+  background: linear-gradient(135deg, #f3f8ff, #e7f1ff);
   min-height: 100vh;
+}
+
+.loading-text {
+  text-align: center;
+  margin-top: 80px;
+  font-size: 1.2rem;
+  color: #333;
 }
 
 /* ---------- Ticket Card ---------- */
 .ticket-card {
-  width: 100%;
-  max-width: 650px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  padding: 2rem;
-  position: relative;
-}
-
-/* ---------- Header ---------- */
-.ticket-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px dashed #007bff;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-}
-
-.ticket-header h1 {
-  color: #007bff;
-  font-size: 1.8rem;
-  font-weight: 700;
-}
-
-.ticket-number {
-  background: #007bff;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
-}
-
-/* ---------- Route Section ---------- */
-.route-section h2 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #222;
-  margin-bottom: 4px;
-}
-
-.route-section span {
-  color: #007bff;
-  font-weight: 700;
-}
-
-.route-section .date {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-/* ---------- Info Blocks ---------- */
-.bus-info, .passenger-info {
-  background: #f8faff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 1rem;
-  margin-top: 1rem;
-}
-
-.bus-info h3, .passenger-info h3 {
-  color: #007bff;
-  font-size: 1.1rem;
-  margin-bottom: 0.6rem;
-}
-
-/* ---------- Passenger Rows ---------- */
-.passenger-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 0.6rem;
-  margin-bottom: 0.5rem;
-  transition: 0.3s ease;
+  border-radius: 16px;
+  padding: 25px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.passenger-row:hover {
-  background: #f0f7ff;
+.ticket-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
-/* ---------- Footer ---------- */
-.ticket-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 2px dashed #007bff;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
+/* ---------- Ticket Header ---------- */
+.ticket-title {
+  text-align: center;
+  color: #1a73e8;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
 }
 
+.divider {
+  border: none;
+  border-top: 2px dashed #e0e0e0;
+  margin: 15px 0;
+}
+
+/* ---------- Ticket Details ---------- */
+.ticket-info {
+  line-height: 1.8;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.ticket-info p strong {
+  color: #1a73e8;
+}
+
+/* ---------- QR Section ---------- */
 .qr-section {
   text-align: center;
+  margin-top: 20px;
 }
 
-.qr-section p {
-  font-size: 0.75rem;
+.qr-text {
+  font-size: 0.85rem;
   color: #555;
   margin-top: 6px;
 }
 
-.footer-text {
-  text-align: right;
-  color: #444;
-  font-size: 0.9rem;
-}
-
 /* ---------- Button ---------- */
 .download-btn-container {
-  margin-top: 1.5rem;
+  text-align: center;
+  margin-top: 25px;
 }
 
-.download-btn-container button {
-  background: linear-gradient(135deg, #007bff, #00c2ff);
+.download-btn {
+  background-color: #1a73e8;
   color: white;
   border: none;
-  padding: 0.8rem 1.8rem;
-  border-radius: 12px;
+  padding: 12px 24px;
+  border-radius: 8px;
   font-size: 1rem;
-  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.download-btn-container button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 123, 255, 0.3);
+.download-btn:hover {
+  background-color: #0c5cd8;
+  transform: scale(1.03);
 }
 
-/* ---------- Loading / Error ---------- */
-.loading, .error-msg {
-  text-align: center;
-  font-size: 1.1rem;
-  margin-top: 3rem;
-  color: #333;
-}
-
-/* ---------- Responsive ---------- */
+/* ---------- Responsive Design ---------- */
 @media (max-width: 768px) {
   .ticket-card {
-    padding: 1.5rem;
+    width: 95%;
+    padding: 20px;
   }
 
-  .ticket-header h1 {
-    font-size: 1.5rem;
+  .ticket-title {
+    font-size: 1.4rem;
   }
 
-  .route-section h2 {
-    font-size: 1.1rem;
+  .ticket-info {
+    font-size: 0.9rem;
   }
 
-  .passenger-row {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .footer-text {
-    font-size: 0.8rem;
+  .download-btn {
+    width: 80%;
+    font-size: 0.95rem;
   }
 }
 
 @media (max-width: 480px) {
   .ticket-card {
-    padding: 1.2rem;
+    padding: 18px;
+    border-radius: 12px;
   }
 
-  .ticket-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+  .ticket-title {
+    font-size: 1.3rem;
   }
 
-  .passenger-row {
-    grid-template-columns: 1fr;
+  .ticket-info {
+    font-size: 0.85rem;
   }
 
-  .download-btn-container button {
-    width: 100%;
+  .download-btn {
+    width: 90%;
+    padding: 10px;
   }
 }
+
 
 /* ---------- Footer Base ---------- */
 .footer {

@@ -11,6 +11,7 @@ import BusList from './pages/BusList'
 import SeatMap from './pages/SeatMap';
 import PassengerForm from './pages/PassengerForm'
 import Ticket from './pages/Ticket';
+import Footer from './pages/Footer';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path='/ticket/:bookingId' element={<Ticket/>}/>
           
       </Routes>
+      <Footer/>
     </>
   )
 }
