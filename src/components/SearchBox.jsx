@@ -89,6 +89,7 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
             onChange={setFormattedDate}
             minDate={new Date()}
             dateFormat="dd/MM/yyyy"
+            
           />
       </div>
       <button

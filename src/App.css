@@ -468,6 +468,7 @@
 @media (max-width:768px) {
   .search-container {
     flex-wrap: wrap;
+    /* overflow-x: hidden; */
     gap: 0.625rem;
     padding: 1rem;
     box-shadow: none;
