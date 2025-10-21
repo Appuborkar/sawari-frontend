@@ -486,6 +486,7 @@
   input {
     padding: 0.625rem;
     margin-left: 0.8rem;
+    overflow: hidden;
   }
 
   .icon {
