@@ -481,7 +481,6 @@
     border: 1px solid var(--pcolor);
     border-radius: 1rem;
     background: #f9f9f9;
-    overflow-x: hidden;
   }
 
   input {
