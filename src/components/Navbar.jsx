@@ -5,10 +5,11 @@ import {Logo} from '../assets/image'
 import { FaBars, FaTimes } from 'react-icons/fa'
 
 const Navbar = () => {
-  const { logout, user, loading } = useAuth();
+  const { logout,loading } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const {user} = useAuth();
 
-  if (loading) return null;
+  if (loading) return <p>Loading....</p>;
 
   return (
     <nav className="navbar">

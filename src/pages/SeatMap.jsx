@@ -26,7 +26,6 @@ const SeatMap = () => {
 
   useReleaseSeats();
 
-
   useEffect(() => {
     const fetchSeats = async () => {
       setLoading(true);

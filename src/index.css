@@ -4,4 +4,7 @@
   box-sizing:border-box;
 font-family: "poppins";
 }
+html {
+  scroll-behavior: smooth;
+}
 

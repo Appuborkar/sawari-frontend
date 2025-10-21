@@ -12,6 +12,10 @@ import SeatMap from './pages/SeatMap';
 import PassengerForm from './pages/PassengerForm'
 import Ticket from './pages/Ticket';
 import Footer from './pages/Footer';
+import Profile from './pages/Profile';
+import ProtectedRoute from './components/ProtectedRoute';
+import ViewTickets from './components/ViewTickets'
+import ScrollToTop from './components/ScrollToTop'
 
 
 function App() {
@@ -30,6 +34,7 @@ function App() {
 
       />
       <Navbar />
+      <ScrollToTop/>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
@@ -37,10 +42,20 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/select-seat/:busId' element={<SeatMap />} />
         <Route path='/passenger-form' element={<PassengerForm />} />
-        <Route path='/ticket/:bookingId' element={<Ticket/>}/>
-          
+        <Route path='/ticket/:bookingId' element={ 
+          <ProtectedRoute>
+            <Ticket />
+          </ProtectedRoute>} />
+        <Route path='/profile' element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>} />
+           <Route path='/viewticket' element={
+          <ProtectedRoute>
+            <ViewTickets />
+          </ProtectedRoute>} />
       </Routes>
-      <Footer/>
+      <Footer />
     </>
   )
 }

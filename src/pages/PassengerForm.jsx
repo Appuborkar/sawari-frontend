@@ -88,6 +88,8 @@ const PassengerForm = () => {
       seats: selectedSeats,
       boardingPoint: selectedBoarding,
       droppingPoint: selectedDropping,
+      boardingTime,
+      droppingTime,
       totalFare,
         email: formData.email,
         mobile: Number(formData.mobile),
