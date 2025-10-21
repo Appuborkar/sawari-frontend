@@ -423,7 +423,7 @@
 }
 
 /* Between 1024px and 768px (Tablet landscape mode) */
-@media (max-width: 1024px) and (min-width: 769px) {
+@media (max-width: 1024px) {
   .search-container {
     gap: 0.75rem;
     padding: 1rem;
@@ -468,7 +468,7 @@
 @media (max-width:768px) {
   .search-container {
     flex-wrap: wrap;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     gap: 0.625rem;
     padding: 1rem;
     box-shadow: none;
