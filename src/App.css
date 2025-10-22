@@ -6,7 +6,7 @@
   --font-md: 1.125rem;
   --font-lg: 1.5rem;
   --font-xl: 2rem;
-  --container-width: 60rem;
+  
 
 }
 
@@ -347,7 +347,7 @@
   border-radius: 0.625rem;
   box-shadow: 0 0.25rem 0.625rem rgba(16, 15, 15, 0.1);
   margin: 2rem auto 2rem auto;
-  max-width: var(--container-width);
+  max-width: 60rem;
   width: 100%;
 }
 
@@ -377,7 +377,7 @@
   cursor: text;
 }
 
-.input {
+.search-container .input {
   width: 100%;
   border: none;
   font-size: var(--font-sm);
@@ -444,7 +444,7 @@
   .search-input{
     font-size: calc(var(--font-sm) - 1px);
   }
-  .input{
+  .search-container .input{
     padding-right:0.1rem;
     text-align: center;
   }
