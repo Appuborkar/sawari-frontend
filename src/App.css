@@ -1049,16 +1049,19 @@ background: gray;
   }
 
   .cancel-filter{
-  display:block;
-  border:1px solid var(--pcolor);
-  color:var(--pcolor);
-  border-radius: 1rem;
-  background: none;
+  display: block;
+    width: 40%;
+    padding: 0.2rem 0rem 0.2rem 0rem;
+    margin:auto;
+    background-color: rgb(187, 185, 185);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
 }
-.cancel-filter:hover{
-  background-color: var(--pcolor);
-  color: white;
-}
+
   /* Filter option blocks */
   .filter-options {
     margin-bottom: 1.25rem;
