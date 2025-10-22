@@ -90,6 +90,16 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
             minDate={new Date()}
             dateFormat="dd/MM/yyyy"
             popperPlacement="bottom-start"
+            popperModifiers={[
+      {
+        name: 'preventOverflow',
+        options: {
+          rootBoundary: 'viewport',
+          tether: false,
+          altAxis: true,
+        },
+      },
+    ]}
             
           />
       </div>
