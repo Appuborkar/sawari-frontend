@@ -20,9 +20,9 @@ const ViewTickets = () => {
         const sortedTickets = res.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        console.log("Fetched tickets:", sortedTickets);
+        
         setTickets(sortedTickets);
-        console.log("Tickets set in state:", tickets);
+        
       } catch (err) {
         console.error("Error fetching tickets:", err);
         toast.error("Failed to fetch tickets");
@@ -32,6 +32,9 @@ const ViewTickets = () => {
     };
     fetchTickets();
   }, [token]);
+
+  console.log("Fetched tickets:", sortedTickets);
+  console.log("Tickets set in state:", tickets);
 
   const handleCancel = async (ticketId, departureTime) => {
     const currentTime = new Date();
