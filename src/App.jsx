@@ -14,9 +14,8 @@ import Ticket from './pages/Ticket';
 import Footer from './pages/Footer';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
-import ViewTickets from './components/ViewTickets'
+import ViewTickets from './pages/ViewTickets'
 import ScrollToTop from './components/ScrollToTop'
-
 
 function App() {
 
@@ -55,7 +54,7 @@ function App() {
             <ViewTickets />
           </ProtectedRoute>} />
       </Routes>
-      <Footer />
+      <Footer/>
     </>
   )
 }
