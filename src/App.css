@@ -1050,7 +1050,7 @@ background: gray;
 
   .cancel-filter{
   display: block;
-    width: 40%;
+    width:1rem;
     padding: 0.2rem 0rem 0.2rem 0rem;
     margin:auto;
     background-color: rgb(187, 185, 185);
