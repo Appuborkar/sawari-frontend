@@ -106,6 +106,7 @@ const BusList = () => {
     
       <div className={`mobile-filter-container ${isFilterOpen ? "show" : ""}`}>
         <div className="mobile">
+          <button className="cancel-filter" onClick={()=>setIsFilterOpen(false)} ></button>
           <Filters
             sortBy={sortBy}
             setSortBy={setSortBy}
@@ -116,7 +117,6 @@ const BusList = () => {
             selectedOperators={selectedOperators}
             handleOperatorChange={handleOperatorChange}
             clearFilters={clearFilters}
-            removeFilter={()=>setIsFilterOpen(false)}
             isFilterActive={isFilterActive}
             operators={operators}
           />
