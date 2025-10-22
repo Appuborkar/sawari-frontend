@@ -34,7 +34,6 @@ const ViewTickets = () => {
   }, [token]);
 
 
-  console.log("Tickets set in state:", tickets);
 
   const handleCancel = async (ticketId, departureTime) => {
     const currentTime = new Date();
