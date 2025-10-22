@@ -1055,6 +1055,10 @@ background: gray;
   border-radius: 1rem;
   background: none;
 }
+.cancel-filter:hover{
+  background-color: var(--pcolor);
+  color: white;
+}
   /* Filter option blocks */
   .filter-options {
     margin-bottom: 1.25rem;
