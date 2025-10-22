@@ -448,12 +448,10 @@
     padding-right:0.1rem;
     text-align: center;
   }
-
   .reverse-btn {
     padding: 0.4rem 0.6rem;
     font-size: calc(var(--font-sm) - 1px);
   }
-
   .search-btn {
     padding: 0.6rem 1rem;
     font-size: calc(var(--font-sm) - 1px);
@@ -483,7 +481,7 @@
     background: #f9f9f9;
   }
 
-  input {
+  .search-container input {
     padding: 0.625rem;
     margin-left: 0.8rem;
   }
