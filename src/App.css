@@ -475,7 +475,7 @@
 
   .input-group {
     width: 100%;
-    border: 1px solid var(--pcolor);
+    border: 1px solid var(--pcolor) !important;
     border-radius: 1rem;
     background: #f9f9f9;
     display: flex;
@@ -491,7 +491,6 @@
     flex-shrink: 0;
   }
 
-  /* DatePicker specific fixes */
   .react-datepicker-wrapper {
     width: 100%;
   }
@@ -502,19 +501,11 @@
   
   .react-datepicker__input-container input {
     width: 100%;
-    border: none;
     background: transparent;
-    outline: none;
     font-size: var(--font-sm);
-    padding: 0;
+    padding: 0.625rem;
   }
 
-  /* Calendar dropdown positioning */
-  .react-datepicker-popper {
-    z-index: 9999 !important;
-    transform: none !important;
-  }
-  
   .react-datepicker {
     max-width: calc(100vw - 2rem) !important;
     margin: 0.5rem !important;
