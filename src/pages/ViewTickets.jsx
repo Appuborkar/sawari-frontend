@@ -33,7 +33,7 @@ const ViewTickets = () => {
     fetchTickets();
   }, [token]);
 
-  console.log("Fetched tickets:", sortedTickets);
+
   console.log("Tickets set in state:", tickets);
 
   const handleCancel = async (ticketId, departureTime) => {
