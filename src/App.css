@@ -1513,6 +1513,12 @@ margin-right:1rem;
     
     width: 100%; 
   }
+  .boarding{
+
+  border-right:none;
+
+  }
+  
 
   .layout-page{
     border:1px solid gray; 
@@ -1521,6 +1527,23 @@ margin-right:1rem;
     margin: auto;
     padding:1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+ .board{
+    border-right:none;
+  }
+
+}
+@media (max-width:480px){
+  
+  .boarding{
+    border:none;
+  }
+  .boarding:last-child:hover{
+    border-radius:0rem 0rem 0rem 0rem
+  }
+  .dropping:last-child{
+    border-radius:0rem 0rem 1rem 1rem;
+
   }
 }
 
