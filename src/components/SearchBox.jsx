@@ -91,7 +91,6 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
             dateFormat="dd/MM/yyyy"
             popperPlacement="bottom-start"
             
-            
           />
       </div>
       <button

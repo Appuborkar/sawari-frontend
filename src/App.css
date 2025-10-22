@@ -463,10 +463,9 @@
 }
 
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
   .search-container {
     flex-wrap: wrap;
-    /* overflow-x: hidden; */
     gap: 0.625rem;
     padding: 1rem;
     box-shadow: none;
@@ -479,17 +478,47 @@
     border: 1px solid var(--pcolor);
     border-radius: 1rem;
     background: #f9f9f9;
-  }
-
-  .search-container input {
+    display: flex;
+    align-items: center;
     padding: 0.625rem;
-    margin-left: 0.8rem;
   }
 
   .icon {
     font-size: var(--font-sm);
     margin-left: 1rem;
-    margin-right: 0.1rem;
+    margin-right: 0.625rem;
+    color: var(--pcolor);
+    flex-shrink: 0;
+  }
+
+  /* DatePicker specific fixes */
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+  
+  .react-datepicker__input-container {
+    width: 100%;
+  }
+  
+  .react-datepicker__input-container input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: var(--font-sm);
+    padding: 0;
+  }
+
+  /* Calendar dropdown positioning */
+  .react-datepicker-popper {
+    z-index: 9999 !important;
+    transform: none !important;
+  }
+  
+  .react-datepicker {
+    max-width: calc(100vw - 2rem) !important;
+    margin: 0.5rem !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
   }
 
   .reverse-btn {
@@ -506,11 +535,6 @@
     transform: rotate(0.25turn);
   }
 
-  .reverse-btn:hover {
-    background-color: white;
-
-  }
-
   .search-btn {
     width: 100%;
     border-radius: 5rem;
@@ -518,6 +542,7 @@
     padding: 0.625rem;
   }
 }
+
 
 /* Popular bus container */
 .popular-container {
