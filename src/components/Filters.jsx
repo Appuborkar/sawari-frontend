@@ -10,6 +10,7 @@ const Filters = ({
     selectedOperators,
     handleOperatorChange,
     clearFilters,
+    removeFilter,
     isFilterActive,
     operators
 }) => {
@@ -21,6 +22,7 @@ const Filters = ({
                 <button onClick={clearFilters} className="clear-filter-btn" disabled={!isFilterActive}>
                     Clear Filters
                 </button>
+                <button className='cancel-filter'onClick={removeFilter}>X</button>
             </div>
             <div className="filter-options">
                 <h4>Price</h4>

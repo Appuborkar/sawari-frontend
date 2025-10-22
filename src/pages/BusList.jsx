@@ -116,6 +116,7 @@ const BusList = () => {
             selectedOperators={selectedOperators}
             handleOperatorChange={handleOperatorChange}
             clearFilters={clearFilters}
+            removeFilter={()=>setIsFilterOpen(false)}
             isFilterActive={isFilterActive}
             operators={operators}
           />

@@ -636,6 +636,9 @@
   margin-bottom: 1rem;
 
 }
+.cancel-filter{
+  display:none;
+}
 
 .clear-filter-btn {
   border-style: none;
@@ -1045,6 +1048,13 @@ background: gray;
     cursor: not-allowed;
   }
 
+  .cancel-filter{
+  display:block;
+  border:1px solid var(--pcolor);
+  color:var(--pcolor);
+  border-radius: 1rem;
+  background: none;
+}
   /* Filter option blocks */
   .filter-options {
     margin-bottom: 1.25rem;
@@ -1096,13 +1106,7 @@ background: gray;
 
 }
 
-
-
 @media (max-width: 768px) {
-
-  
-
- 
 
   .bus-route,
   .bus-time-block,
@@ -1124,16 +1128,19 @@ background: gray;
   }
 }
 
-@media (max-width: 480px) {
-  
 
-.filter-btn-mobile{
+
+@media (max-width: 480px) {
+
+  .filter-btn-mobile{
   margin-top: 2rem;
   margin-right:1rem;
 }
  
-
-
+.cancel-filter{
+  display:block;
+  
+}
   .bus-time {
     font-size: 0.9rem;
   }
