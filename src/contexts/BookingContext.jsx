@@ -4,6 +4,7 @@ const BookingContext = createContext();
 
 export const BookingProvider = ({ children }) => {
  
+    const [bookingStep, setBookingStep] = useState("start");  
     const [bookingData, setBookingData] = useState(() => {
   
     const saved = sessionStorage.getItem("bookingData");
@@ -47,6 +48,8 @@ export const BookingProvider = ({ children }) => {
         bookingData,
         setBookingData,
         clearBookingData,
+        bookingStep,
+        setBookingStep,
       }}
     >
       {children}

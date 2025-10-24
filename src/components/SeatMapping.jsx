@@ -88,7 +88,6 @@ const SeatMapping = ({ seats, setSeats }) => {
         <span className="status selected">Selected</span>
       </div>
 
-      
       <div className="layout-page">
       <div className="driver">
         <GiSteeringWheel />

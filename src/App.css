@@ -6,8 +6,6 @@
   --font-md: 1.125rem;
   --font-lg: 1.5rem;
   --font-xl: 2rem;
-  
-
 }
 
 .navbar {
@@ -1711,137 +1709,130 @@ margin-right:1rem;
 }
 
 
-/* ---------- Global ---------- */
 .ticket-container {
-  padding: 20px;
-  font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #f3f8ff, #e7f1ff);
-  min-height: 100vh;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  background-color: #f8f9fa;
 }
 
-.loading-text {
-  text-align: center;
-  margin-top: 80px;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-/* ---------- Ticket Card ---------- */
 .ticket-card {
-  background: #ffffff;
+  background: #fff;
   border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   padding: 25px;
-  width: 90%;
-  max-width: 420px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 700px;
+  position: relative;
+  border-top: 5px solid #d8232a;
 }
 
-.ticket-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* ---------- Ticket Header ---------- */
 .ticket-title {
-  text-align: center;
-  color: #1a73e8;
-  font-size: 1.6rem;
-  margin-bottom: 10px;
+  color: #d8232a;
+  font-size: 22px;
+  margin: 0;
 }
+
+.ticket-status {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.ticket-status.confirmed { background-color: #28a745; }
+.ticket-status.cancelled { background-color: #dc3545; }
 
 .divider {
   border: none;
-  border-top: 2px dashed #e0e0e0;
-  margin: 15px 0;
+  border-top: 1px dashed #ccc;
+  margin: 16px 0;
 }
 
-/* ---------- Ticket Details ---------- */
-.ticket-info {
-  line-height: 1.8;
-  color: #333;
-  font-size: 0.95rem;
+.journey-section {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.ticket-info p strong {
-  color: #1a73e8;
+.journey-left, .journey-right {
+  width: 48%;
 }
 
-/* ---------- QR Section ---------- */
+.passenger-section, .fare-section, .contact-info {
+  margin-top: 10px;
+}
+
+.passenger-grid, .fare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 6px 20px;
+}
+
+.total-fare {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.contact-qr-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
 .qr-section {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .qr-text {
-  font-size: 0.85rem;
+  font-size: 12px;
   color: #555;
-  margin-top: 6px;
 }
 
-/* ---------- Button ---------- */
 .download-btn-container {
-  text-align: center;
-  margin-top: 25px;
+  margin-top: 20px;
 }
 
 .download-btn {
-  background-color: #1a73e8;
+  background-color: #d8232a;
   color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 
 .download-btn:hover {
-  background-color: #0c5cd8;
-  transform: scale(1.03);
+  background-color: #b91c22;
 }
 
-/* ---------- Responsive Design ---------- */
-@media (max-width: 768px) {
-  .ticket-card {
-    width: 95%;
-    padding: 20px;
+/* Responsive */
+@media (max-width: 600px) {
+  .journey-left, .journey-right {
+    width: 100%;
   }
-
-  .ticket-title {
-    font-size: 1.4rem;
+  .contact-qr-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-
-  .ticket-info {
-    font-size: 0.9rem;
-  }
-
-  .download-btn {
-    width: 80%;
-    font-size: 0.95rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .ticket-card {
-    padding: 18px;
-    border-radius: 12px;
-  }
-
-  .ticket-title {
-    font-size: 1.3rem;
-  }
-
-  .ticket-info {
-    font-size: 0.85rem;
-  }
-
-  .download-btn {
-    width: 90%;
-    padding: 10px;
+  .qr-section {
+    margin-top: 15px;
   }
 }
 
@@ -2038,5 +2029,113 @@ margin-right:1rem;
 
   .profile-info p {
     font-size: 1rem;
+  }
+}
+
+
+/* Container */
+.tickets-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Title */
+.tickets-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Grid */
+.tickets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Ticket Card */
+.ticket-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ticket-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* Ticket Text */
+.ticket-card p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+.ticket-bus {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* Seats */
+.ticket-card span {
+  font-weight: 500;
+  color: #1e40af;
+}
+
+/* Cancel Button */
+.ticket-cancel-btn {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #ef4444;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ticket-cancel-btn:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.ticket-cancel-btn:disabled {
+  background-color: #fca5a5;
+  cursor: not-allowed;
+}
+
+/* Loading and Empty states */
+.tickets-loading,
+.tickets-empty {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #64748b;
+  padding: 20px 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .tickets-title {
+    font-size: 1.6rem;
+  }
+
+  .ticket-card {
+    padding: 15px;
+  }
+
+  .ticket-card p {
+    font-size: 0.9rem;
+  }
+
+  .ticket-cancel-btn {
+    width: 100%;
+    padding: 10px 0;
   }
 }

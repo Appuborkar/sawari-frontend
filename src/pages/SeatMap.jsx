@@ -67,7 +67,7 @@ const SeatMap = () => {
         sessionStorage.setItem("redirectAfterLogin", "/passenger-form");
         navigate("/login");
       } else {
-        navigate("/passenger-form");
+        navigate("/passenger-form" ,{replace:true});
       }
     } catch (err) {
       console.error(err);

@@ -10,12 +10,12 @@ import Home from './pages/Home';
 import BusList from './pages/BusList'
 import SeatMap from './pages/SeatMap';
 import PassengerForm from './pages/PassengerForm'
-import Ticket from './pages/Ticket';
 import Footer from './pages/Footer';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
-import ViewTickets from './pages/ViewTickets'
 import ScrollToTop from './components/ScrollToTop'
+import Ticket from './pages/Ticket'
+import MyTickets from './pages/MyTickets'
 
 function App() {
 
@@ -51,7 +51,7 @@ function App() {
           </ProtectedRoute>} />
            <Route path='/viewticket' element={
           <ProtectedRoute>
-            <ViewTickets />
+            <MyTickets />
           </ProtectedRoute>} />
       </Routes>
       <Footer/>
@@ -59,4 +59,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

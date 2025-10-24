@@ -1,32 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import QRCode from "react-qr-code";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-// import "../styles/Ticket.css"; // <-- Import custom CSS file
+import pdfGenerator  from "../utils/pdfGenerator";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Ticket = () => {
   const ticketRef = useRef();
+  const qrRef = useRef();
   const { bookingId } = useParams();
   const [ticketDetails, setTicketDetails] = useState(null);
   const { token } = useAuth();
 
-  // ✅ Download ticket as PDF
-  const downloadPDF = async () => {
-    const canvas = await html2canvas(ticketRef.current);
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF();
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-    pdf.save("bus-ticket.pdf");
-  };
-
-  // ✅ Fetch ticket details
+  const handleDownloadPDF =()=>{
+    pdfGenerator(ticketDetails,qrRef);
+  }
   useEffect(() => {
     const fetchTicketDetails = async () => {
       try {
@@ -62,48 +52,94 @@ const Ticket = () => {
     ticketNumber,
     status,
     contactInfo,
+    boardingTime,
+    droppingTime
   } = ticketDetails;
 
   return (
-    <div className="ticket-container">
-      <div className="ticket-card" ref={ticketRef}>
-        <h2 className="ticket-title">🎫 Bus Ticket</h2>
-        <hr className="divider" />
+   <div className="ticket-container">
+  <div className="ticket-card" ref={ticketRef}>
+    {/* HEADER */}
+    <div className="ticket-header">
+      <h2 className="ticket-title">🚌 SAWARI BUS E-TICKET</h2>
+      <span className={`ticket-status ${status.toLowerCase()}`}>
+        {status.toUpperCase()}
+      </span>
+    </div>
 
-        <div className="ticket-info">
-          <p><strong>Ticket No:</strong> {ticketNumber}</p>
-          <p><strong>Status:</strong> {status}</p>
+    <hr className="divider" />
 
-          <p><strong>Operator:</strong> {busId?.operator}</p>
-          <p><strong>From:</strong> {busId?.source}</p>
-          <p><strong>To:</strong> {busId?.destination}</p>
-
-          <p><strong>Passenger:</strong> {passengers?.[0]?.name}</p>
-          <p><strong>Age:</strong> {passengers?.[0]?.age}</p>
-          <p><strong>Gender:</strong> {passengers?.[0]?.gender}</p>
-
-          <p><strong>Seat(s):</strong> {seats?.join(", ")}</p>
-          <p><strong>Boarding:</strong> {boardingPoint}</p>
-          <p><strong>Dropping:</strong> {droppingPoint}</p>
-
-          <p><strong>Total Fare:</strong> ₹{totalFare}</p>
-
-          <p><strong>Contact:</strong> {contactInfo?.mobile}</p>
-          <p><strong>Email:</strong> {contactInfo?.email}</p>
-        </div>
-
-        <div className="qr-section">
-          <QRCode value={`Ticket:${ticketNumber}`} size={100} />
-          <p className="qr-text">Scan to verify</p>
-        </div>
+    {/* JOURNEY SECTION */}
+    <div className="journey-section">
+      <div className="journey-left">
+        <p><strong>Ticket No:</strong> {ticketNumber}</p>
+        <p><strong>Route:</strong> {busId?.source}-{busId?.destination}</p>
+        <p><strong>Date:</strong> {busId?.departureDate}</p>
+        <p><strong>Operator:</strong> {busId?.operator}</p>
+        <p><strong>Bus Type:</strong> {busId?.busType}</p>
       </div>
 
-      <div className="download-btn-container">
-        <button onClick={downloadPDF} className="download-btn">
-          Download Ticket PDF
-        </button>
+      <div className="journey-right">
+        <p><strong>Boarding:</strong> {boardingPoint} ({boardingTime})</p>
+        <p><strong>Dropping:</strong> {droppingPoint} ({droppingTime})</p>
+        
       </div>
     </div>
+
+    <hr className="divider" />
+
+    {/* PASSENGER DETAILS */}
+    <div className="passenger-section">
+      <h3>Passenger Details</h3>
+      <div className="passenger-grid">
+        <p><strong>Name:</strong> {passengers?.[0]?.name}</p>
+        <p><strong>Age:</strong> {passengers?.[0]?.age}</p>
+        <p><strong>Gender:</strong> {passengers?.[0]?.gender}</p>
+        <p><strong>Seat(s):</strong> {seats?.join(", ")}</p>
+      </div>
+    </div>
+
+    <hr className="divider" />
+
+    {/* FARE DETAILS */}
+    <div className="fare-section">
+      <h3>Fare Summary</h3>
+      <div className="fare-grid">
+        <p><strong>Base Fare:</strong> ₹{(totalFare * 0.9).toFixed(2)}</p>
+        <p><strong>GST (10%):</strong> ₹{(totalFare * 0.1).toFixed(2)}</p>
+        <p className="total-fare">
+          <strong>Total Fare:</strong> ₹{totalFare.toFixed(2)}
+        </p>
+      </div>
+    </div>
+
+    <hr className="divider" />
+
+    {/* CONTACT + QR SECTION */}
+    <div className="contact-qr-section">
+      <div className="contact-info">
+        <h3>Contact Information</h3>
+        <p><strong>Mobile:</strong> {contactInfo?.mobile}</p>
+        <p><strong>Email:</strong> {contactInfo?.email}</p>
+      </div>
+      <div className="qr-section" ref={qrRef}>
+        <QRCode value={`Ticket:${ticketNumber}`} size={100} />
+        <p className="qr-text">Scan to verify</p>
+      </div>
+    </div>
+  </div>
+
+  {/* DOWNLOAD BUTTON */}
+  <div className="download-btn-container">
+    <button
+      onClick={handleDownloadPDF}
+      className="download-btn"
+    >
+      Download Ticket PDF
+    </button>
+  </div>
+</div>
+
   );
 };
 

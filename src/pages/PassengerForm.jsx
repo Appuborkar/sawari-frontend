@@ -105,7 +105,7 @@ try {
 
   if (result.data.ok) {
     toast.success("Booking Confirmed");
-    navigate(`/ticket/${result.data.bookingId}`)
+    navigate(`/ticket/${result.data.bookingId}`,{replace:true});
     clearBookingData();
   }
 } catch (error) {
