@@ -15,6 +15,7 @@ import ScrollToTop from './components/ScrollToTop'
 import Ticket from './pages/Ticket'
 import MyTickets from './pages/MyTickets'
 import Layout from './components/Layout'
+import AboutUs from './pages/AboutUs'
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
       <Routes>
         <Route element={<Layout loading={loading} loaderMessage="Loading app..." />}>
         <Route path='/' element={<Home />} />
+        <Route path='/about' element={<AboutUs />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/bus-list' element={<BusList />} />
         <Route path='/login' element={<Login />} />

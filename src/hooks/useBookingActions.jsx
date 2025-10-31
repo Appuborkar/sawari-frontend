@@ -25,7 +25,7 @@ const API_URL = import.meta.env.VITE_API_URL ||"http://localhost:5000";
         }
       );
 
-      toast.success(response.data.message);
+      toast.success("Please login to continue");
       return response.data;
     } catch (err) {
       console.error("Error transferring seat holds:", err);

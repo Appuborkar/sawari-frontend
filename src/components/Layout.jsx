@@ -9,7 +9,7 @@ const Layout = ({ loading, loaderMessage }) => {
     <Loader message={loaderMessage || "Loading..."} />
   ) : (
     <>
-      <Navbar />
+      <Navbar /> 
         <Outlet />
       <Footer />
     </>

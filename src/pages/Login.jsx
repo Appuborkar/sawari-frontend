@@ -61,9 +61,8 @@ const Login = () => {
         setMessage("Login successful");
 
         if (redirectPath) {
-          navigate(`${redirectPath}`);
-          
           await transferHold(authToken);
+          navigate(`${redirectPath}`);
           sessionStorage.removeItem("guestId");
           sessionStorage.removeItem("redirectAfterLogin");
         }
@@ -72,9 +71,9 @@ const Login = () => {
         }
 
       } catch (error) {
-        console.error("Login failed", error.response?.data || error.message);
+        console.error("Login failed", error.response?.data.message || error.message);
 
-        toast.error(JSON.stringify(error.response?.data, null, 2));
+        toast.error(error.response?.data.message);
       }
     }
   };

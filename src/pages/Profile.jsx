@@ -18,6 +18,7 @@ const Profile = () => {
   });
   const [previewPhoto, setPreviewPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (user) {
@@ -29,6 +30,25 @@ const Profile = () => {
       });
     }
   }, [user]);
+
+  const validate = () => {
+    let tempErrors = {};
+
+    if (!/^[a-zA-Z\s]{3,}$/.test(formData.name)) {
+      tempErrors.name = "Enter valid name";
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      tempErrors.email = "Enter valid email format";
+    }
+
+    if (!/^\d{10}$/.test(formData.mobile)) {
+      tempErrors.mobile = "Mobile number must be 10 digits";
+    }
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,6 +63,7 @@ const Profile = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
     setLoading(true);
 
     const data = new FormData();
@@ -75,7 +96,7 @@ const Profile = () => {
     return () => previewPhoto && URL.revokeObjectURL(previewPhoto);
   }, [previewPhoto]);
 
-  if (!user) return <Loader message='Loading Profile...'/>;
+  if (!user) return <Loader message='Loading Profile...' />;
 
   return (
     <div className="profile-container">
@@ -97,6 +118,7 @@ const Profile = () => {
               onChange={handleChange}
               required
             />
+            {errors.name && <p className="error">{errors.name}</p>}
             <input
               type="email"
               name="email"
@@ -104,6 +126,7 @@ const Profile = () => {
               onChange={handleChange}
               required
             />
+            {errors.email && <p className="error">{errors.email}</p>}
             <input
               type="text"
               name="mobile"
@@ -111,6 +134,7 @@ const Profile = () => {
               onChange={handleChange}
               required
             />
+            {errors.mobile && <p className="error">{errors.mobile}</p>}
             <input type="file" accept="image/*" onChange={handleFileChange} />
             <button type="submit" disabled={loading} className="save-btn">
               {loading ? "Saving..." : "Save"}
@@ -121,7 +145,7 @@ const Profile = () => {
                 setEditMode(false);
                 setPreviewPhoto(null);
               }}
-            className="cancel-btn">
+              className="cancel-btn">
               Cancel
             </button>
           </form>

@@ -91,7 +91,7 @@ const MyTickets = () => {
           <TicketCard
             key={ticket._id}
             ticketDetails={ticket}
-            compact                // 👈 compact view        // show download button
+            compact                
             canCancel={canCancelTicket(ticket)}   // enable cancel
             canceling={canceling === ticket._id}
             onCancel={() => handleCancel(ticket._id)}

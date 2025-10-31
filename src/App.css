@@ -196,7 +196,7 @@
 }
 
 .submitBtn:hover {
-  background: #0056b3;
+  background: #262b8d;
 
 }
 
@@ -307,7 +307,7 @@
 }
 
 .login-form button:hover {
-  background: #0056b3;
+  background: #262b8d;
 }
 
 .D-signup {
@@ -323,6 +323,9 @@
 @media (max-width: 480px) {
   .signin-form {
     width: 100%;
+  }
+  .D-signup{
+    font-size:0.7rem;
   }
 
   .login-label {
@@ -1152,6 +1155,207 @@ background: gray;
 
 }
 
+/* About Us */
+
+.about-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #0c0f53;
+  text-align: center;
+  background: #fdfdfd;
+}
+
+/* Title */
+.about-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: var(--pcolor);
+}
+
+/* Image Section */
+.about-image {
+  margin-bottom: 30px;
+}
+
+.about-image img.medium-image {
+  width: 200px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.about-image img.medium-image:hover {
+  transform: scale(1.05);
+}
+
+/* About text */
+.about-content {
+  max-width: 800px;
+  margin: 0 auto 50px auto;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+/* Cards section */
+.cards-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.card {
+  background-color: #fff;
+  padding: 25px 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  flex: 1 1 250px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card h3 {
+  color: var(--pcolor);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Mission Section */
+.mission-section {
+  display: flex;
+  justify-content: center;
+  padding: 20px 10px;
+}
+
+.mission-card {
+  background-color: #fff  ;
+  color:var(--pcolor);
+  padding: 35px 25px;
+  border-radius: 15px;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+.mission-card h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.mission-card p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Animations */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.slide-in {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: slideIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Styling */
+@media (max-width: 1024px) {
+  .cards-container {
+    justify-content: center;
+  }
+
+  .card {
+    flex: 1 1 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 2rem;
+  }
+
+  .card {
+    flex: 1 1 80%;
+    margin-bottom: 20px;
+  }
+
+  .mission-card h2 {
+    font-size: 1.8rem;
+  }
+
+  .mission-card p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-title {
+    font-size: 1.5rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+  }
+
+  .card h3 {
+    font-size: 1.2rem;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+  }
+
+  .mission-card {
+    padding: 25px 15px;
+  }
+
+  .mission-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .mission-card p {
+    font-size: 0.95rem;
+  }
+
+  .about-image img.medium-image {
+    width: 150px;
+  }
+}
+
+
 /* Back button */
 .back-btn {
   display: none; 
@@ -1644,8 +1848,6 @@ margin-right:1rem;
   }
 }
 
-/* Confirm ticket */
-
 
 /* ---------- Footer Base ---------- */
 .footer {
@@ -1657,6 +1859,7 @@ margin-right:1rem;
 
 /* ---------- Footer Container ---------- */
 .footer-container {
+  margin-top:auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -2137,7 +2340,6 @@ justify-content: center;
   max-width: 1200px;
   margin: 20px auto;
   padding: 0 15px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .tickets-container .heading{
@@ -2174,7 +2376,7 @@ justify-content: center;
 
 .spinner {
   border: 5px solid #f3f3f3;
-  border-top: 5px solid #d8232a; /* Sawari primary color */
+  border-top: 5px solid var(--pcolor); 
   border-radius: 50%;
   width: 50px;
   height: 50px;
