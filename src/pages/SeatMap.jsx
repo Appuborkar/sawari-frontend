@@ -80,7 +80,6 @@ cancelHold()},
   const handleContinue = async () => {
     try {
       await axios.post(`${API_URL}/api/booking/${busId}/hold`, bookingPayload);
-      toast.success("Seats held successfully!");
       if (!token) {
         sessionStorage.setItem("redirectAfterLogin", "/passenger-form");
         navigate("/login");
