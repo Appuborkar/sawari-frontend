@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../contexts/AuthContext";
+import Loader from "../components/Loader";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -74,7 +75,7 @@ const Profile = () => {
     return () => previewPhoto && URL.revokeObjectURL(previewPhoto);
   }, [previewPhoto]);
 
-  if (!user) return <p>Loading profile...</p>;
+  if (!user) return <Loader message='Loading Profile...'/>;
 
   return (
     <div className="profile-container">

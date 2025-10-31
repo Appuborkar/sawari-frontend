@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Loader from '../components/Loader';
 import BoardingDroppingPoints from "../components/BoardingDroppingPoints";
 import SeatMapping from "../components/SeatMapping";
 import { useBooking } from "../contexts/BookingContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useReleaseSeats } from "../hooks/useReleaseSeats";
+import BackButton from "../components/BackButton";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -51,7 +53,23 @@ const SeatMap = () => {
     setBookingData((prev) => ({ ...prev, totalFare }));
   }, [price, selectedSeats, setBookingData]);
 
-  const userId = token ? user?._id : sessionStorage.getItem("guestId");
+ const userId = token ? user?._id : sessionStorage.getItem("guestId");
+useEffect(()=>{
+ const cancelHold = async () => {
+    if (!busId || !userId) return;
+
+    try {
+      await axios.delete(`${API_URL}/api/booking/cancel-hold`, {
+        params: { busId, userId },
+      });
+    } catch (err) {
+      console.error("Failed to cancel hold:", err);
+    }
+  };
+cancelHold()},
+  [busId,userId])
+
+  
   const bookingPayload = {
     userId,
     seats: selectedSeats,
@@ -67,7 +85,7 @@ const SeatMap = () => {
         sessionStorage.setItem("redirectAfterLogin", "/passenger-form");
         navigate("/login");
       } else {
-        navigate("/passenger-form" ,{replace:true});
+        navigate("/passenger-form");
       }
     } catch (err) {
       console.error(err);
@@ -78,10 +96,13 @@ const SeatMap = () => {
   const isAllSelected = selectedSeats.length > 0 && selectedBoarding && selectedDropping;
   const totalFare = price * selectedSeats.length;
 
-  if (loading) return <p>Loading seat map...</p>;
+  if (loading) return <Loader message='Loading seat map...'/>
 
   return (
+    <div>
+      <BackButton title={"back"}/>
     <div className="seatmap-page">
+      
       <SeatMapping seats={seats} setSeats={setSeats} />
       <aside className="pointsAside">
       <BoardingDroppingPoints
@@ -98,6 +119,7 @@ const SeatMap = () => {
         </section>
       
       </aside>
+    </div>
     </div>
   );
 };

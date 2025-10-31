@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useBooking } from "../contexts/BookingContext";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import BackButton from "../components/BackButton";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -12,7 +13,7 @@ const PassengerForm = () => {
   const { bookingData ,clearBookingData} = useBooking();
   const { user } = useAuth();
   const userId = user?._id;
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   
   const {
     selectedSeats,
@@ -39,6 +40,7 @@ const PassengerForm = () => {
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+
 
   const validate = () => {
     let tempErrors = {};
@@ -120,6 +122,7 @@ try {
 
  return (
   <div className="passenger-form-container">
+    <BackButton title={'back'}/>
     <div className="booking-summary">
       <h1>Booking Summary</h1>
       <span>{source} → {destination}</span>

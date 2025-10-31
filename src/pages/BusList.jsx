@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaFilter ,FaTimesCircle} from "react-icons/fa";
+import Loader from "../components/Loader";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import BusCard from "../components/BusCard";
@@ -94,7 +95,7 @@ const BusList = () => {
   };
   const isFilterActive = sortBy !== "" || showAC || showNonAC || selectedOperators.length > 0;
 
-  if (loading) return <p>Loading...</p>;
+  if(loading) return <Loader message='loading buses...'/>
 
   return (
     <>

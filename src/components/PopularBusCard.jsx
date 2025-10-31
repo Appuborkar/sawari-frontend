@@ -17,9 +17,10 @@ const PopularBusCard = () => {
     const navigate = useNavigate();
 
     const handleBookNow = (route) => {
-    const departureDate = moment().format("DD-MM-YYYY");
 
-    setFormattedDate(departureDate);
+    const rawDate=new Date();
+    setFormattedDate(rawDate);
+    const departureDate = moment(rawDate).format("DD-MM-YYYY");
     setSource({ value: route.source, label: route.source });
     setDestination({ value: route.destination, label: route.destination });
 

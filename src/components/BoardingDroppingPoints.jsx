@@ -1,5 +1,4 @@
 import React from "react";
-import { toast } from "react-toastify";
 import { useBooking } from "../contexts/BookingContext";
 
 const BoardingDroppingPoints = ({ boardingPoints, droppingPoints }) => {
@@ -27,7 +26,6 @@ const BoardingDroppingPoints = ({ boardingPoints, droppingPoints }) => {
       droppingTime: point.time
     }));
   };
-
 
   return (
     <div className="points-container">

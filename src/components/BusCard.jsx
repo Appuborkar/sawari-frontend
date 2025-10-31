@@ -1,7 +1,7 @@
 import { FaBusAlt, FaRupeeSign } from "react-icons/fa";
-import { useAuth } from "../contexts/AuthContext";
 import { useBooking } from "../contexts/BookingContext";
 import { useNavigate } from "react-router-dom";
+import Loader from './Loader';
 
 const BusCard = ({
   buses,
@@ -9,13 +9,9 @@ const BusCard = ({
   destination,
   departureDate
 }) => {
-  const { loading } = useAuth();
   const navigate = useNavigate();
   const {setBookingData,clearBookingData } = useBooking();
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   return (
     <>
       {buses.length > 0 ? (
@@ -52,7 +48,6 @@ const BusCard = ({
                     <div className="bus-meta1">
                       <span style={{ color: '#333' }}>{bus.departureDate}</span>
                       <span className="ticket-price"><FaRupeeSign />{bus.price}</span>
-
                       <span>
                         <button
                           className="select-seat-btn"

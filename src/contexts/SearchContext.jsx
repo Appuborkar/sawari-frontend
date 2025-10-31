@@ -40,7 +40,7 @@ export const SearchProvider = ({ children }) => {
     };
 
     fetchPlaces();
-  }, [API_URL]);
+  }, []);
 
   const handleReverse = () => {
     setSource(destination);
@@ -58,6 +58,7 @@ export const SearchProvider = ({ children }) => {
     }
 
     const departureDate = moment(formattedDate).format("DD-MM-YYYY");
+  
     navigate(
       `/bus-list?source=${source.value}&destination=${destination.value}&departureDate=${departureDate}`
     );

@@ -26,6 +26,7 @@ const pdfGenerator = async (ticketDetails, qrRef) => {
     contactInfo,
     boardingTime,
     droppingTime,
+    bookedAt
   } = ticketDetails;
 
   const qrImageData = await getQRImageDataUrl();
@@ -46,7 +47,7 @@ const pdfGenerator = async (ticketDetails, qrRef) => {
 
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(24);
-  pdf.setTextColor("#d8232a");
+  pdf.setTextColor("#0c0f53");
   pdf.text("SAWARI BUS E-TICKET", pageWidth / 2, y + 15, { align: "center" });
   pdf.addImage(Logo, "PNG", margin, margin - 15, 50, 50);
   y += 50;
@@ -57,7 +58,7 @@ const pdfGenerator = async (ticketDetails, qrRef) => {
   y += 60;
 
   // Divider line
-  pdf.setDrawColor("#d8232a");
+  pdf.setDrawColor("#0c0f53");
   pdf.setLineWidth(1);
   pdf.line(margin, y, pageWidth - margin, y);
   y += 20;
@@ -135,7 +136,7 @@ const pdfGenerator = async (ticketDetails, qrRef) => {
     head: [["#", "Name", "Gender", "Age", "Seat"]],
     body: passengerData,
     theme: "striped",
-    headStyles: { fillColor: [216, 35, 42], textColor: 255, halign: "center" },
+    headStyles: { fillColor: "#0c0f53", textColor: 255, halign: "center" },
     styles: { halign: "center", fontSize: 11, cellPadding: 6 },
     margin: { left: margin, right: margin },
   });
@@ -184,20 +185,14 @@ const pdfGenerator = async (ticketDetails, qrRef) => {
   y += 25;
 
   // Add QR code image bottom right
-  const qrSize = 100;
+  const qrSize = 80;
   pdf.addImage(qrImageData, "PNG", pageWidth - qrSize - margin, y - 20, qrSize, qrSize);
 
-  // Footer note
-  pdf.setFontSize(10);
-  pdf.setTextColor("#666");
-  pdf.text(
-    "Please carry a valid government ID proof during boarding. Have a safe journey!",
-    margin,
-    pdf.internal.pageSize.height - 50
-  );
+  pdf.text(`Booked At: ${new Date(bookedAt).toLocaleString()}`,margin,y);
+  y+=18;
 
   // Footer line
-  pdf.setDrawColor("#d8232a");
+  pdf.setDrawColor("#0c0f53");
   pdf.setLineWidth(1);
   pdf.line(margin, pdf.internal.pageSize.height - 60, pageWidth - margin, pdf.internal.pageSize.height - 60);
 
