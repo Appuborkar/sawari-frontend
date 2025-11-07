@@ -60,7 +60,8 @@ The platform provides a seamless user experience with real-time seat selection, 
 
 
 
-### Backend Repo URL
+## Backend Repo URL
+https://github.com/Appuborkar/sawari-backend.git
 
 ---
 
