@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import TicketCard from "../components/TicketCard";
 import moment from "moment";
-import Loader from "../components/Loader"
+import Loader from "../components/Loader";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -22,6 +22,7 @@ const MyTickets = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTickets(res.data.sort((a, b) => new Date(b.bookedAt) - new Date(a.bookedAt)));
+        
       } catch (err) {
         console.error("Error fetching tickets:", err);
         toast.error("Failed to fetch tickets");
@@ -64,7 +65,6 @@ const MyTickets = () => {
     const journeyStart = moment(`${ticket.busId.departureDate} ${ticket.busId.boardingTime}`, "DD-MM-YYYY HH:mm");
     
     const journeyEnd = moment(`${ticket.busId.departureDate} ${ticket.busId.alightingTime}`, "DD-MM-YYYY HH:mm");
-    
 
     if (journeyEnd.isBefore(journeyStart)) {
       journeyEnd.add(1, "day");
@@ -81,7 +81,7 @@ const MyTickets = () => {
 
 
   if (loading) return <Loader message='loading ticket details...' />;
-  if (!tickets.length) return <p>No tickets booked yet.</p>;
+  if (!tickets.length) return <p className="no-tickets">No tickets booked yet.</p>;
 
   return (
     <div className="tickets-container">
@@ -91,7 +91,7 @@ const MyTickets = () => {
           <TicketCard
             key={ticket._id}
             ticketDetails={ticket}
-            compact                
+            compact
             canCancel={canCancelTicket(ticket)}   // enable cancel
             canceling={canceling === ticket._id}
             onCancel={() => handleCancel(ticket._id)}

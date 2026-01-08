@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import QRCode from "react-qr-code";
 import pdfGenerator from "../utils/pdfGenerator";
+import Loader from '../components/Loader';
 
 const TicketCard = ({
   ticketDetails,
@@ -10,7 +11,7 @@ const TicketCard = ({
   canCancel,
 }) => {
   const qrRef = useRef();
-  if (!ticketDetails) return <p>Loading ticket...</p>;
+  if (!ticketDetails) return <Loader>{message="Loading ticket..."}</Loader>;
 
   const {
     busId,
