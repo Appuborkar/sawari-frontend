@@ -5,11 +5,7 @@ const BoardingDroppingPoints = ({ boardingPoints, droppingPoints }) => {
 
   const { bookingData, setBookingData } = useBooking();
 
-  const {
-    selectedBoarding,
-    selectedDropping,
-
-  } = bookingData;
+  const { selectedBoarding, selectedDropping } = bookingData;
 
   const handleBoardingChange = (point) => {
     setBookingData(prev => ({
@@ -40,8 +36,6 @@ const BoardingDroppingPoints = ({ boardingPoints, droppingPoints }) => {
                 value={point.location}
                 checked={selectedBoarding === point.location}
                 onChange={() => handleBoardingChange(point)}
-
-
               />
               <span className="point-location">
                 {point.location}
@@ -67,7 +61,6 @@ const BoardingDroppingPoints = ({ boardingPoints, droppingPoints }) => {
                 value={point.location}
                 checked={selectedDropping === point.location}
                 onChange={() => handleDroppingChange(point)}
-
               />
               <span className="point-location">
                 {point.location}
@@ -75,7 +68,6 @@ const BoardingDroppingPoints = ({ boardingPoints, droppingPoints }) => {
               <span>
                 {point.time}
               </span>
-
             </label>
           ))
         ) : (

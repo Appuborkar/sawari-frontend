@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react'
+import {useState,useEffect} from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt, FaExchangeAlt, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
