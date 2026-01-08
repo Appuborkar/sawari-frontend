@@ -2351,7 +2351,8 @@ justify-content: center;
   text-align: center;
 }
 .no-tickets{
-  margin:10rem;
+  margin-top:10rem;
+  margin-bottom:10rem;
   font-weight: 400;
   text-align: center;
 }
