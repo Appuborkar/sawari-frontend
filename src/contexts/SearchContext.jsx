@@ -10,6 +10,7 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export const SearchProvider = ({ children }) => {
   const [places, setPlaces] = useState([]);
+  const [loadingPlaces,setLoadingPlaces]=useState(true);
   const [source, setSource] = useState(null);
   const [destination, setDestination] = useState(null);
   const [formattedDate, setFormattedDate] = useState(new Date());
@@ -19,6 +20,7 @@ export const SearchProvider = ({ children }) => {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
+        setLoadingPlaces(true)
         const response = await axios.get(`${API_URL}/api/place`);
         
         const dataArray = Array.isArray(response.data)
@@ -36,6 +38,9 @@ export const SearchProvider = ({ children }) => {
       } catch (error) {
         console.error("Error fetching places:", error);
 
+      }
+      finally{
+        setLoadingPlaces(false);
       }
     };
 
@@ -73,6 +78,7 @@ export const SearchProvider = ({ children }) => {
         source,
         destination,
         formattedDate,
+        loadingPlaces,
         setSource,
         setDestination,
         setFormattedDate,

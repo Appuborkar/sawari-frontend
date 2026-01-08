@@ -4,10 +4,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt, FaExchangeAlt, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import Select from "react-select";
 import { useSearch } from '../contexts/SearchContext';
+import Skeleton from './Skeleton';
 
 const SearchBox=()=> {
 
-const {places,source,destination,formattedDate,setSource,setDestination,setFormattedDate,handleReverse,handleSearch}=useSearch();
+const {places,loadingPlaces,source,destination,formattedDate,setSource,setDestination,setFormattedDate,handleReverse,handleSearch}=useSearch();
 
 const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -58,6 +59,7 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   <div className='search-container'>
       <div className='input-group'>
       <FaMapMarkerAlt className='icon'/>
+      {loadingPlaces ?<Skeleton height={40}/>:(
         <Select
         className="search-input"
         styles={customStyles}
@@ -65,7 +67,7 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
         placeholder="Source"
         value={source}
         onChange={setSource}
-        /></div>
+        />)}</div>
         <button 
         className='reverse-btn'
         onClick={handleReverse}
@@ -73,6 +75,7 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
         </button>
         <div className='input-group'>
         <FaMapMarkerAlt className='icon'/>
+        {loadingPlaces ?<Skeleton height={40}/>:(
         <Select
         className='search-input'
         styles={customStyles}
@@ -80,7 +83,7 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
         onChange={setDestination}
         placeholder='Destination'
         value={destination}
-        /></div>
+        />)}</div>
         <div className="input-group input">
          <FaCalendarAlt className="icon" />
         <DatePicker
