@@ -14,7 +14,7 @@ const SeatMapping = ({ seats, setSeats }) => {
   const { token } = useAuth();
 
   const handleSeatClick = (seat) => {
-    if (!seat || seat.status === "booked" || seat.status==="temp") return;
+    if (!seat || seat.status === "booked" || seat.status === "temp") return;
 
     if (!selectedSeats.includes(seat.seatNumber) && selectedSeats.length >= MAX_SEATS) {
       toast.warning(`You can only select up to ${MAX_SEATS} seats.`);
@@ -53,21 +53,27 @@ const SeatMapping = ({ seats, setSeats }) => {
 
   const renderBusLayout = () => {
     const rows = [];
-    for (let row = 0; row < 10; row++) {
-      const cols = row === 9 ? [0, 1, 2, 3, 4] : [0, 1, 2, 3];
+    let seatIndex = 0;
+
+    while (seatIndex < seats.length) {
+      let seatsInRow = 4;
+
+      if (seats.length - seatIndex === 5) {
+        seatsInRow = 5;
+      }
+
       rows.push(
-        <div key={row} className="seat-row">
-          {cols.map((col) => {
-            const seatIndex = row === 9 ? row * 4 + col : row * 4 + col;
-            const seat = seats?.[seatIndex];
-            if (!seat) return <div key={col} className="seat empty"></div>;
+        <div key={seatIndex} className="seat-row">
+          {Array.from({ length: seatsInRow }).map((_, col) => {
+            const seat = seats[seatIndex++];
+            if (!seat)
+              return <div key={col} className="seat empty"></div>;
 
             return (
               <div
                 key={seat.seatNumber}
-                className={`seat ${seat.status} ${
-                  selectedSeats.includes(seat.seatNumber) ? "selected" : ""
-                }`}
+                className={`seat ${seat.status} ${selectedSeats.includes(seat.seatNumber) ? "selected" : ""
+                  }`}
                 onClick={() => handleSeatClick(seat)}
               >
                 {seat.seatNumber}
@@ -77,8 +83,11 @@ const SeatMapping = ({ seats, setSeats }) => {
         </div>
       );
     }
+
     return rows;
   };
+
+
 
   return (
     <div className="seatmap-container">
@@ -89,12 +98,12 @@ const SeatMapping = ({ seats, setSeats }) => {
       </div>
 
       <div className="layout-page">
-      <div className="driver">
-        <GiSteeringWheel />
-      </div>
+        <div className="driver">
+          <GiSteeringWheel />
+        </div>
 
-  
-      <div className="bus-layout">{renderBusLayout()}</div>
+
+        <div className="bus-layout">{renderBusLayout()}</div>
       </div>
     </div>
   );
