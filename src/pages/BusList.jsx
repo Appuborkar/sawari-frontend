@@ -25,7 +25,8 @@ const BusList = () => {
   const [operators,setOperators]=useState([]);
   const [selectedOperators, setSelectedOperators] = useState([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { loading } = useAuth();
+  const [busesLoading, setBusesLoading] = useState(true);
+
   const {clearBookingData}=useBooking();
   
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -39,6 +40,7 @@ const BusList = () => {
 
   useEffect(() => {
     if (source && destination && departureDate) {
+      setBusesLoading(true);
       axios
         .get(
           `${API_URL}/api/bus/search?source=${source}&destination=${destination}&departureDate=${departureDate}`
@@ -51,7 +53,10 @@ const BusList = () => {
           setOperators(uniqueOperators);
           
         })
-        .catch((error) => console.error("Error fetching buses:", error));
+        .catch((error) => console.error("Error fetching buses:", error))
+        .finally(() => {
+        setBusesLoading(false);
+      });
     }
   }, [source, destination, departureDate]);
 
@@ -95,7 +100,6 @@ const BusList = () => {
   };
   const isFilterActive = sortBy !== "" || showAC || showNonAC || selectedOperators.length > 0;
 
-  if(loading) return <Loader message='loading buses...'/>
 
   return (
     <>
@@ -149,7 +153,8 @@ const BusList = () => {
           <BusCard buses={filteredBuses}
             source={source}
             destination={destination}
-            departureDate={departureDate} />
+            departureDate={departureDate} 
+            loading={busesLoading}/>
         </main>
       </div>)}
 
